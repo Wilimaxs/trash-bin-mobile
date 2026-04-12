@@ -80,4 +80,7 @@ dependencies {
     implementation(libs.coil.compose)
     //----Camera & QR Scanner----
     implementation(libs.play.services.code.scanner)
+    //----Storage----
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.security.crypto)
 }
