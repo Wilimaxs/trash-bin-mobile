@@ -11,7 +11,7 @@ import androidx.core.content.edit
 
 @Suppress("DEPRECATION")
 @Singleton
-class AuthPreferences @Inject constructor(
+class SecureStorage @Inject constructor(
     @ApplicationContext context: Context
 ) {
     private val masterKey = MasterKey.Builder(context)
