@@ -17,11 +17,9 @@ abstract class BaseRepository {
                 val response = apiCall()
                 if (response.isSuccessful) {
                     val body = response.body()
-                    // Pastikan body tidak null dan data tidak null
                     if (body != null && body.data != null) {
                         NetworkResult.Success(body.data)
                     } else {
-                        // Jika server kirim sukses tapi datanya null
                         NetworkResult.Error(
                             message = ErrorMapper.getApiMessage(response),
                             code = response.code()
@@ -34,14 +32,12 @@ abstract class BaseRepository {
                     )
                 }
             } catch (e: java.io.IOException) {
-                // Menangani error koneksi (no internet, timeout)
                 NetworkResult.Error(
                     message = "Connection failed. Please check your internet connection.",
                     code = 0,
                     throwable = e
                 )
             } catch (e: Exception) {
-                // Menangani runtime error lainnya
                 NetworkResult.Error(
                     message = e.localizedMessage ?: "An unexpected error occurred.",
                     code = null,

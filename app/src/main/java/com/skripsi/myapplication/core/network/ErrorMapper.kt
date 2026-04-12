@@ -14,22 +14,17 @@ object ErrorMapper {
     fun <T> getApiMessage(response: Response<ApiResponse<T>>): String {
         val code = response.code()
 
-        // 1. Coba ambil dari body (biasanya kalau response.isSuccessful tapi data null)
         val bodyMessage = response.body()?.message
         if (!bodyMessage.isNullOrEmpty()) return bodyMessage
 
-        // 2. Coba ambil dari errorBody (untuk status 4xx atau 5xx)
         val errorBody = response.errorBody()?.string()
         if (!errorBody.isNullOrEmpty()) {
             try {
-                // Parsing JSON error dari backend
                 val errorResponse = gson.fromJson(errorBody, ApiResponse::class.java)
                 if (errorResponse.message.isNotEmpty()) return errorResponse.message
             } catch (_: Exception) {
-                // Jika gagal parsing, lanjut ke step berikutnya
             }
         }
-        // 3. Fallback ke Mapping Status Code jika tidak ada message dari API
         return getMessageFromCode(code)
     }
 
