@@ -2,6 +2,7 @@ package com.skripsi.myapplication.utils.composables
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,6 +31,7 @@ fun TextFormField(
     isError: Boolean = false,
     errorMessage: String? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
@@ -60,6 +62,8 @@ fun TextFormField(
             },
             isError = isError,
             keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            singleLine = true,
             visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
             shape = RoundedCornerShape(size = 12.dp),
             colors = OutlinedTextFieldDefaults.colors(
@@ -86,8 +90,7 @@ fun TextFormField(
                     trailingIcon?.invoke()
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
+            modifier = Modifier.fillMaxWidth()
         )
 
         if (isError && errorMessage != null) {

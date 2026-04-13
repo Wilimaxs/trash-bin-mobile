@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.skripsi.myapplication.core.base.AuthState
 import com.skripsi.myapplication.core.base.AuthViewModel
 import com.skripsi.myapplication.feature.loading.LoadingScreen
+import com.skripsi.myapplication.feature.login.LoginScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 
 @Composable
@@ -68,7 +69,7 @@ fun AppNavigation(
      */
     NavHost(
         navController = navController,
-        startDestination = Screen.Onboarding.route, // BYPASS SEMENTARA: Agar langsung kehalaman Onboarding ketika running
+        startDestination = Screen.Login.route, // BYPASS SEMENTARA: Agar langsung kehalaman Onboarding ketika running
         modifier = modifier
     ) {
         composable(Screen.Loading.route) {
@@ -83,8 +84,7 @@ fun AppNavigation(
         }
 
         composable(Screen.Login.route) {
-            // TODO: Ganti dengan UI Login asli
-            // Sementara bisa memanggil authViewModel.setAuthenticated("token123") kalau sukses login
+            LoginScreen()
         }
 
         composable(Screen.Home.route) {
