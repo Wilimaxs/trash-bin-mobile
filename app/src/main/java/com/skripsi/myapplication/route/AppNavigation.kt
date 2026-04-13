@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.skripsi.myapplication.core.base.AuthState
 import com.skripsi.myapplication.core.base.AuthViewModel
 import com.skripsi.myapplication.feature.loading.LoadingScreen
+import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 
 @Composable
 fun AppNavigation(
@@ -72,9 +73,10 @@ fun AppNavigation(
         }
 
         composable(Screen.Onboarding.route) {
-            // TODO: Ganti dengan UI Onboarding asli
-            // Sementara gunakan callback ini saat dummy selesai
-            // OnboardingScreen(onFinish = { authViewModel.finishOnboarding() })
+            OnBoardingScreen(
+                // onGetStartedClick = { authViewModel.finishOnboarding() },
+                // onLoginClick = { authViewModel.finishOnboarding() } // Kita arahkan ke unauthenticated state untuk memunculkan login form
+            )
         }
 
         composable(Screen.Login.route) {
