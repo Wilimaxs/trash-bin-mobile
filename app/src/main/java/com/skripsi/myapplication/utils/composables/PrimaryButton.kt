@@ -1,4 +1,4 @@
-package com.skripsi.myapplication.utils
+package com.skripsi.myapplication.utils.composables
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
