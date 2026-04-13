@@ -12,8 +12,7 @@ import com.skripsi.myapplication.utils.composables.PrimaryButton
 
 @Composable
 fun OnBoardingScreen(
-//    onGetStartedClick: () -> Unit,
-//    onLoginClick: () -> Unit
+    onGetStartedClick: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -30,7 +29,7 @@ fun OnBoardingScreen(
 
         PrimaryButton(
             text = "Get Started",
-            onClick = {},
+            onClick = onGetStartedClick,
             modifier = Modifier.padding(horizontal = 24.dp),
             iconResId = R.drawable.ic_right_arrow,
             iconContentDescription = "Get Started Icon"

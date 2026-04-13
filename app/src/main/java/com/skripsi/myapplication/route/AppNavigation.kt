@@ -69,7 +69,7 @@ fun AppNavigation(
      */
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route, // BYPASS SEMENTARA: Agar langsung kehalaman Onboarding ketika running
+        startDestination = Screen.Onboarding.route,
         modifier = modifier
     ) {
         composable(Screen.Loading.route) {
@@ -78,8 +78,12 @@ fun AppNavigation(
 
         composable(Screen.Onboarding.route) {
             OnBoardingScreen(
-                // onGetStartedClick = { authViewModel.finishOnboarding() },
-                // onLoginClick = { authViewModel.finishOnboarding() } // Kita arahkan ke unauthenticated state untuk memunculkan login form
+                onGetStartedClick = { 
+                    navController.navigate(Screen.Login.route) {
+                        // popUpTo agar jika menekan tombol 'Back' dari Login, tidak balik ke Onboarding lagi.
+                        popUpTo(Screen.Onboarding.route) { inclusive = true }
+                    }
+                }
             )
         }
 
