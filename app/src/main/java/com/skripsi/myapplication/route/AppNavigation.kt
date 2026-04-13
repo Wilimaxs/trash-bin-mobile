@@ -27,6 +27,8 @@ fun AppNavigation(
      * Default Route, Based from [AuthState] and [AuthViewModel]
      *
      */
+    /* BYPASS PENGCEKAN STATE SEMENTARA: 
+       Uncomment block LaunchedEffect ini jika setup Auth API & Storage sudah digunakan kembali.
     LaunchedEffect(authState) {
         when (authState) {
             is AuthState.Loading -> {
@@ -52,6 +54,7 @@ fun AppNavigation(
             }
         }
     }
+    */
 
     /**
      *
@@ -65,7 +68,7 @@ fun AppNavigation(
      */
     NavHost(
         navController = navController,
-        startDestination = Screen.Loading.route,
+        startDestination = Screen.Onboarding.route, // BYPASS SEMENTARA: Agar langsung kehalaman Onboarding ketika running
         modifier = modifier
     ) {
         composable(Screen.Loading.route) {

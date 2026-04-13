@@ -19,48 +19,41 @@ fun OnBoardingScreen(
 //    onGetStartedClick: () -> Unit,
 //    onLoginClick: () -> Unit
 ) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        containerColor = MaterialTheme.colorScheme.background
-    ) { paddingValues ->
-        Column(
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        OnboardingHeader()
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        OnboardingContent()
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Button(
+            onClick = {},
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = green,
+                contentColor = TextPrimary
+            ),
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
+                .padding(horizontal = 24.dp)
+                .padding(bottom = 24.dp)
+                .fillMaxWidth()
+                .height(56.dp),
         ) {
-            OnboardingHeader()
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            OnboardingContent()
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Button(
-                onClick = {},
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = green,
-                    contentColor = TextPrimary
-                ),
-                modifier = Modifier
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 24.dp)
-                    .fillMaxWidth()
-                    .height(56.dp),
-            ) {
-                Text(
-                    text = "Get Started",
-                    style = MaterialTheme.typography.labelLarge.copy(
-                        fontWeight = FontWeight.Bold
-                    )
+            Text(
+                text = "Get Started",
+                style = MaterialTheme.typography.labelLarge.copy(
+                    fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_right_arrow),
-                    contentDescription = "Get Started Icon",
-                )
-            }
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Icon(
+                painter = painterResource(id = R.drawable.ic_right_arrow),
+                contentDescription = "Get Started Icon",
+            )
         }
     }
 }

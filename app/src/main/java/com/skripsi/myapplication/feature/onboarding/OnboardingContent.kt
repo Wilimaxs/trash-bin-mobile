@@ -38,7 +38,7 @@ fun OnboardingContent() {
                 contentDescription = "Recycle and Earn Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(0.7f),
+                    .aspectRatio(1f),
                 contentScale = ContentScale.Crop
             )
             Row(
