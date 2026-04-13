@@ -18,7 +18,9 @@ import com.skripsi.myapplication.core.theme.TextSecondary
 import com.skripsi.myapplication.core.theme.green
 
 @Composable
-fun LoginFooter() {
+fun LoginFooter(
+    onNavigateToSignUp: () -> Unit = {}
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
@@ -35,7 +37,7 @@ fun LoginFooter() {
                 fontWeight = FontWeight.Bold
             ),
             modifier = Modifier
-                .clickable { /* onNavigateToSignUp() */ }
+                .clickable { onNavigateToSignUp() }
                 .padding(all = 4.dp)
         )
     }

@@ -14,6 +14,7 @@ import com.skripsi.myapplication.core.base.AuthViewModel
 import com.skripsi.myapplication.feature.loading.LoadingScreen
 import com.skripsi.myapplication.feature.login.LoginScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
+import com.skripsi.myapplication.feature.registration.RegistrationScreen
 
 @Composable
 fun AppNavigation(
@@ -88,7 +89,19 @@ fun AppNavigation(
         }
 
         composable(Screen.Login.route) {
-            LoginScreen()
+            LoginScreen(
+                onNavigateToSignUp = {
+                    navController.navigate(Screen.Registration.route)
+                }
+            )
+        }
+
+        composable(Screen.Registration.route) {
+            RegistrationScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable(Screen.Home.route) {

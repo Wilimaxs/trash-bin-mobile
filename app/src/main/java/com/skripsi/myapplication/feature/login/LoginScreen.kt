@@ -18,7 +18,7 @@ import com.skripsi.myapplication.utils.composables.PrimaryButton
 @Composable
 fun LoginScreen(
     // onLoginSuccess: () -> Unit = {},
-    // onNavigateToSignUp: () -> Unit = {},
+    onNavigateToSignUp: () -> Unit = {},
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -50,7 +50,7 @@ fun LoginScreen(
             iconResId = R.drawable.ic_right_arrow
         )
         Spacer(modifier = Modifier.weight(1f))
-        LoginFooter()
+        LoginFooter(onNavigateToSignUp = onNavigateToSignUp)
     }
 }
 
