@@ -1,7 +1,9 @@
 package com.skripsi.myapplication.feature.registration
 
 import androidx.lifecycle.ViewModel
+import com.skripsi.myapplication.utils.validation.ConfirmPasswordValidator
 import com.skripsi.myapplication.utils.validation.EmailValidator
+import com.skripsi.myapplication.utils.validation.FullNameValidator
 import com.skripsi.myapplication.utils.validation.PasswordValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,10 +67,13 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
     fun onRegisterClick() {
         val currentState = _state.value
 
-        val fullNameError = if (currentState.fullName.isEmpty()) "Full name cannot be empty" else null
+        val fullNameError = FullNameValidator.validate(currentState.fullName)
         val emailError = EmailValidator.validate(currentState.email)
         val passwordError = PasswordValidator.validate(currentState.password)
-        val confirmPasswordError = if (currentState.password != currentState.confirmPassword) "Passwords do not match" else null
+        val confirmPasswordError = ConfirmPasswordValidator.validate(
+            password = currentState.password,
+            confirmPassword = currentState.confirmPassword
+        )
 
         _state.update {
             it.copy(
