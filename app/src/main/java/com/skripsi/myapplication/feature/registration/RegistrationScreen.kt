@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -24,6 +25,7 @@ fun RegistrationScreen(
     onNavigateBack: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         modifier = Modifier
@@ -48,7 +50,10 @@ fun RegistrationScreen(
                 isTermsAccepted = state.isTermsAccepted,
                 onTermsChange = viewModel::onTermsAcceptedChange,
                 isFormFilled = state.isFormFilled,
-                onRegisterClick = viewModel::onRegisterClick
+                onRegisterClick = {
+                    focusManager.clearFocus()
+                    viewModel.onRegisterClick()
+                }
             )
         }
     ) { paddingValues ->
