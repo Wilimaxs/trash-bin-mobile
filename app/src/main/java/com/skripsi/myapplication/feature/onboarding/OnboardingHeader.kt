@@ -1,7 +1,6 @@
 package com.skripsi.myapplication.feature.onboarding
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -16,16 +15,16 @@ import androidx.compose.ui.unit.dp
 fun OnboardingHeader(
     modifier: Modifier = Modifier
 ) {
-    Column(
-        verticalArrangement = Arrangement.Center,
+    Row(
         modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 16.dp),
     ) {
         Text(
             text = "EcoBin",
-            style = MaterialTheme.typography.bodyMedium.copy(
+            style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold
-            ),
-            modifier = Modifier.padding(all = 16.dp)
+            )
         )
     }
 }

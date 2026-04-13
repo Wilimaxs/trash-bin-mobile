@@ -20,7 +20,9 @@ fun OnBoardingScreen(
 //    onLoginClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .safeDrawingPadding()
     ) {
         OnboardingHeader()
 
@@ -32,14 +34,13 @@ fun OnBoardingScreen(
 
         Button(
             onClick = {},
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(size = 12.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = green,
                 contentColor = TextPrimary
             ),
             modifier = Modifier
                 .padding(horizontal = 24.dp)
-                .padding(bottom = 24.dp)
                 .fillMaxWidth()
                 .height(56.dp),
         ) {
