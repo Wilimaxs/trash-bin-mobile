@@ -39,7 +39,6 @@ fun VerifyScreen(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .safeDrawingPadding()
             .background(Color(0xFFF9FAFB)), // Abu-abu terang persis gambar
         containerColor = Color.Transparent,
         topBar = {

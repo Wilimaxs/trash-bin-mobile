@@ -2,6 +2,7 @@ package com.skripsi.myapplication.feature.verify
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -59,8 +60,10 @@ class VerifyViewModel @Inject constructor() : ViewModel() {
             // Contoh mock test: Jika "123456" sukses, sisanya dianggap salah
             if (currentOtp == "123456") {
                 _state.update { it.copy(isSuccess = true, isError = false) }
+                CustomSnackBarManager.showSuccess("OTP Verified Successfully!")
             } else {
                 _state.update { it.copy(isError = true, isSuccess = false) }
+                CustomSnackBarManager.showError("Invalid OTP Code!")
             }
         }
     }
@@ -68,5 +71,6 @@ class VerifyViewModel @Inject constructor() : ViewModel() {
     fun onResendClick() {
         startTimer()
         _state.update { it.copy(otpCode = "", isError = false, isSuccess = false) }
+        CustomSnackBarManager.showInfo("OTP has been resent")
     }
 }

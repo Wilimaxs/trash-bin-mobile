@@ -1,5 +1,7 @@
 package com.skripsi.myapplication.route
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -16,6 +18,7 @@ import com.skripsi.myapplication.feature.login.LoginScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
 import com.skripsi.myapplication.feature.verify.VerifyScreen
+import com.skripsi.myapplication.utils.snackbar.CustomTopSnackBarHost
 
 @Composable
 fun AppNavigation(
@@ -69,56 +72,60 @@ fun AppNavigation(
      * @see LaunchedEffect for automatic navigation logic
      *
      */
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Onboarding.route,
-        modifier = modifier
-    ) {
-        composable(Screen.Loading.route) {
-            LoadingScreen()
-        }
+    Box(modifier = Modifier.fillMaxSize()) {
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Onboarding.route,
+            modifier = modifier
+        ) {
+            composable(Screen.Loading.route) {
+                LoadingScreen()
+            }
 
-        composable(Screen.Onboarding.route) {
-            OnBoardingScreen(
-                onGetStartedClick = { 
-                    navController.navigate(Screen.Login.route) {
-                        // popUpTo agar jika menekan tombol 'Back' dari Login, tidak balik ke Onboarding lagi.
-                        popUpTo(Screen.Onboarding.route) { inclusive = true }
+            composable(Screen.Onboarding.route) {
+                OnBoardingScreen(
+                    onGetStartedClick = {
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Onboarding.route) { inclusive = true }
+                        }
                     }
-                }
-            )
+                )
+            }
+
+            composable(Screen.Login.route) {
+                LoginScreen(
+                    onNavigateToSignUp = {
+                        navController.navigate(Screen.Registration.route)
+                    }
+                )
+            }
+
+            composable(Screen.Registration.route) {
+                RegistrationScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToVerify = {
+                        navController.navigate(Screen.Verify.route)
+                    }
+                )
+            }
+
+            composable(Screen.Verify.route) {
+                VerifyScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+            composable(Screen.Home.route) {
+                // TODO: Ganti dengan UI Home/Main aplikasi
+                // Sementara bisa memanggil authViewModel.logout() untuk tester logout
+            }
         }
 
-        composable(Screen.Login.route) {
-            LoginScreen(
-                onNavigateToSignUp = {
-                    navController.navigate(Screen.Registration.route)
-                }
-            )
-        }
-
-        composable(Screen.Registration.route) {
-            RegistrationScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                },
-                onNavigateToVerify = {
-                    navController.navigate(Screen.Verify.route)
-                }
-            )
-        }
-
-        composable(Screen.Verify.route) {
-            VerifyScreen(
-                onNavigateBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
-        composable(Screen.Home.route) {
-            // TODO: Ganti dengan UI Home/Main aplikasi
-            // Sementara bisa memanggil authViewModel.logout() untuk tester logout
-        }
+        // Letakkan CustomTopSnackbarHost di layer paling atas
+        CustomTopSnackBarHost()
     }
 }
