@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 
 @HiltViewModel
 class LoginViewModel @Inject constructor() : ViewModel() {
@@ -36,7 +37,7 @@ class LoginViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun onLoginClick() {
+    fun onLoginClickWithCallback(onSuccess: () -> Unit) {
         val currentState = _state.value
 
         val emailError = EmailValidator.validate(currentState.email)
@@ -51,10 +52,12 @@ class LoginViewModel @Inject constructor() : ViewModel() {
             )
         }
 
-        // Jika tidak ada error, eksekusi login api
         if (emailError == null && passwordError == null) {
-            // TODO: Lakukan hit API Login di sini
-            // _state.update { it.copy(isLoading = true) }
+            //TODO: Add API Here When Ready
+            CustomSnackBarManager.showSuccess("Login Successful")
+            onSuccess()
+        } else {
+            //TODO: Handle When user wrong input
         }
     }
 }

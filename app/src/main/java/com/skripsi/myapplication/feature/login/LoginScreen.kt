@@ -19,6 +19,7 @@ import com.skripsi.myapplication.utils.composables.PrimaryButton
 fun LoginScreen(
     // onLoginSuccess: () -> Unit = {},
     onNavigateToSignUp: () -> Unit = {},
+    onNavigateToMainRoute: () -> Unit = {},
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -44,7 +45,7 @@ fun LoginScreen(
             text = "Sign In",
             onClick = {
                 focusManager.clearFocus()
-                viewModel.onLoginClick()
+                viewModel.onLoginClickWithCallback(onSuccess = onNavigateToMainRoute)
             },
             enabled = state.isFormFilled,
             iconResId = R.drawable.ic_right_arrow

@@ -15,6 +15,7 @@ import com.skripsi.myapplication.core.base.AuthState
 import com.skripsi.myapplication.core.base.AuthViewModel
 import com.skripsi.myapplication.feature.loading.LoadingScreen
 import com.skripsi.myapplication.feature.login.LoginScreen
+import com.skripsi.myapplication.feature.mainNavigation.MainNavigationScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
 import com.skripsi.myapplication.feature.verify.VerifyScreen
@@ -96,6 +97,11 @@ fun AppNavigation(
                 LoginScreen(
                     onNavigateToSignUp = {
                         navController.navigate(Screen.Registration.route)
+                    },
+                    onNavigateToMainRoute = {
+                        navController.navigate(Screen.Home.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
                     }
                 )
             }
@@ -125,8 +131,7 @@ fun AppNavigation(
             }
 
             composable(Screen.Home.route) {
-                // TODO: Ganti dengan UI Home/Main aplikasi
-                // Sementara bisa memanggil authViewModel.logout() untuk tester logout
+                MainNavigationScreen()
             }
         }
 
