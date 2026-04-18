@@ -31,7 +31,8 @@ import com.skripsi.myapplication.utils.composables.PrimaryButton
 @Composable
 fun VerifyScreen(
     viewModel: VerifyViewModel = hiltViewModel(),
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    onNavigateToLogin: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
@@ -65,7 +66,7 @@ fun VerifyScreen(
                     text = "Verify",
                     onClick = {
                         focusManager.clearFocus()
-                        viewModel.onVerifyClick()
+                        viewModel.onVerifyClick(onSuccess = onNavigateToLogin)
                     },
                     enabled = state.isOtpComplete,
                     iconResId = null

@@ -52,7 +52,7 @@ class VerifyViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun onVerifyClick() {
+    fun onVerifyClick(onSuccess: () -> Unit) {
         val currentOtp = _state.value.otpCode
 
         if (currentOtp.length == 6) {
@@ -61,6 +61,7 @@ class VerifyViewModel @Inject constructor() : ViewModel() {
             if (currentOtp == "123456") {
                 _state.update { it.copy(isSuccess = true, isError = false) }
                 CustomSnackBarManager.showSuccess("OTP Verified Successfully!")
+                onSuccess()
             } else {
                 _state.update { it.copy(isError = true, isSuccess = false) }
                 CustomSnackBarManager.showError("Invalid OTP Code!")

@@ -115,6 +115,11 @@ fun AppNavigation(
                 VerifyScreen(
                     onNavigateBack = {
                         navController.popBackStack()
+                    },
+                    onNavigateToLogin = {
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Login.route) { inclusive = true }
+                        }
                     }
                 )
             }

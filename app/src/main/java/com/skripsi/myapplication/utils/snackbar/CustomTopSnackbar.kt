@@ -79,7 +79,7 @@ fun CustomTopSnackBarHost(
                         Icon(
                             painter = painterResource(id = iconResId),
                             contentDescription = data.type.name,
-                            tint = Color.White,
+                            tint = Color.Unspecified,
                             modifier = Modifier.size(24.dp)
                         )
                         Spacer(modifier = Modifier.width(12.dp))
