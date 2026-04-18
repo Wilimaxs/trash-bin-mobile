@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.skripsi.myapplication.core.theme.green
+import com.skripsi.myapplication.feature.history.HistoryScreen
 
 @Composable
 fun MainNavigationScreen() {
@@ -86,7 +87,7 @@ fun MainNavigationScreen() {
                 DummyScreen("Home Screen")
             }
             composable(BottomNavItem.History.route) {
-                DummyScreen("History Screen")
+                HistoryScreen()
             }
             composable(BottomNavItem.Profile.route) {
                 DummyScreen("Profile Screen")
@@ -110,4 +111,3 @@ private fun DummyScreen(title: String) {
 fun MainNavigationScreenPreview() {
     MainNavigationScreen()
 }
-
