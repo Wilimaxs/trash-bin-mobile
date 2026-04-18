@@ -20,6 +20,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.skripsi.myapplication.core.theme.green
 import com.skripsi.myapplication.feature.history.HistoryScreen
+import com.skripsi.myapplication.feature.profile.ProfileScreen
 
 @Composable
 fun MainNavigationScreen() {
@@ -90,7 +91,14 @@ fun MainNavigationScreen() {
                 HistoryScreen()
             }
             composable(BottomNavItem.Profile.route) {
-                DummyScreen("Profile Screen")
+                ProfileScreen(
+                    onLogoutNavigate = {
+                        // TODO: Bersihkan auth / route ke layar login di sini
+                        navController.navigate("login_screen") {
+                            popUpTo(0) { inclusive = true }
+                        }
+                    }
+                )
             }
         }
     }
