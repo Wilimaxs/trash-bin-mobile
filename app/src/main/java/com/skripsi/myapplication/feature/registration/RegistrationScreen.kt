@@ -22,7 +22,8 @@ import com.skripsi.myapplication.feature.registration.composable.RegistrationSti
 @Composable
 fun RegistrationScreen(
     viewModel: RegistrationViewModel = hiltViewModel(),
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    onNavigateToVerify: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
@@ -52,7 +53,10 @@ fun RegistrationScreen(
                 isFormFilled = state.isFormFilled,
                 onRegisterClick = {
                     focusManager.clearFocus()
-                    viewModel.onRegisterClick()
+                    // Simulasi atau logic pemanggilan API, dsb.
+                    viewModel.onRegisterClick(
+                        onSuccess = { onNavigateToVerify() }
+                    )
                 }
             )
         }

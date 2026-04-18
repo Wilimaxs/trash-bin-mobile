@@ -15,6 +15,7 @@ import com.skripsi.myapplication.feature.loading.LoadingScreen
 import com.skripsi.myapplication.feature.login.LoginScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
+import com.skripsi.myapplication.feature.verify.VerifyScreen
 
 @Composable
 fun AppNavigation(
@@ -98,6 +99,17 @@ fun AppNavigation(
 
         composable(Screen.Registration.route) {
             RegistrationScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigateToVerify = {
+                    navController.navigate(Screen.Verify.route)
+                }
+            )
+        }
+
+        composable(Screen.Verify.route) {
+            VerifyScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

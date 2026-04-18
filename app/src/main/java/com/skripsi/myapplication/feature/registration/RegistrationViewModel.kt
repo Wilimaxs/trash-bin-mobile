@@ -64,7 +64,7 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun onRegisterClick() {
+    fun onRegisterClick(onSuccess: () -> Unit) {
         val currentState = _state.value
 
         val fullNameError = FullNameValidator.validate(currentState.fullName)
@@ -91,6 +91,7 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         if (fullNameError == null && emailError == null && passwordError == null && confirmPasswordError == null) {
             // TODO: Lakukan hit API Register di sini
             // _state.update { it.copy(isLoading = true) }
+            onSuccess()
         }
     }
 }
