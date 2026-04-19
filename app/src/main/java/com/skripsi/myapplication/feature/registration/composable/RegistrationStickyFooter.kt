@@ -7,15 +7,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
-import com.skripsi.myapplication.core.theme.TextSecondary
-import com.skripsi.myapplication.core.theme.green
 import com.skripsi.myapplication.utils.composables.PrimaryButton
 
 @Composable
@@ -28,7 +25,7 @@ fun RegistrationStickyFooter(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+            .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
             .padding(horizontal = 12.dp, vertical = 6.dp)
     ) {
         Row(
@@ -39,19 +36,19 @@ fun RegistrationStickyFooter(
                 checked = isTermsAccepted,
                 onCheckedChange = onTermsChange,
                 colors = CheckboxDefaults.colors(
-                    checkedColor = green,
-                    uncheckedColor = Color.LightGray
+                    checkedColor = MaterialTheme.colorScheme.primary,
+                    uncheckedColor = MaterialTheme.colorScheme.outline
                 )
             )
 
             Text(
                 text = buildAnnotatedString {
                     append("I agree to the ")
-                    withStyle(style = SpanStyle(color = green)) {
+                    withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
                         append("Terms & Conditions")
                     }
                 },
-                style = MaterialTheme.typography.bodyMedium.copy(color = TextSecondary),
+                style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
             )
         }
 
@@ -76,4 +73,3 @@ fun RegistrationStickyFooterPreview() {
         )
     }
 }
-

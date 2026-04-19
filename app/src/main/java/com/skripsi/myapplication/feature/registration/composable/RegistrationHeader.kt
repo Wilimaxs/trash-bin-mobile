@@ -9,8 +9,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
-import com.skripsi.myapplication.core.theme.TextPrimary
-import com.skripsi.myapplication.core.theme.TextSecondary
 import com.skripsi.myapplication.feature.login.composable.LoginIconApp
 
 @Composable
@@ -26,7 +24,7 @@ fun RegistrationHeader() {
             text = "Create EcoBin Account",
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onSurface
             )
         )
 
@@ -35,7 +33,7 @@ fun RegistrationHeader() {
         Text(
             text = "Join the green revolution and get rewarded for every item you recycle.",
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = TextSecondary
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         )
     }

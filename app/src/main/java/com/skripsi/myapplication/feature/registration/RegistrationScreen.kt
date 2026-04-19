@@ -9,12 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skripsi.myapplication.R
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 import com.skripsi.myapplication.feature.registration.composable.RegistrationForm
 import com.skripsi.myapplication.feature.registration.composable.RegistrationHeader
 import com.skripsi.myapplication.feature.registration.composable.RegistrationStickyFooter
@@ -31,8 +32,8 @@ fun RegistrationScreen(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF9FAFB)),
-        containerColor = Color.Transparent,
+            .background(MaterialTheme.colorScheme.background),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             IconButton(
                 onClick = onNavigateBack,
@@ -43,7 +44,7 @@ fun RegistrationScreen(
                 Icon(
                     painter = painterResource(R.drawable.ic_left_arrow),
                     contentDescription = "Back",
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         },
@@ -87,5 +88,13 @@ fun RegistrationScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
         }
+    }
+}
+
+@Preview
+@Composable
+fun RegistrationScreenPreview() {
+    SmartTrashBinTheme {
+        RegistrationScreen()
     }
 }
