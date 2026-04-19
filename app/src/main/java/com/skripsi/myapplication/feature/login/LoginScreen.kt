@@ -17,7 +17,6 @@ import com.skripsi.myapplication.utils.composables.PrimaryButton
 
 @Composable
 fun LoginScreen(
-    // onLoginSuccess: () -> Unit = {},
     onNavigateToSignUp: () -> Unit = {},
     onNavigateToMainRoute: () -> Unit = {},
     viewModel: LoginViewModel = hiltViewModel()
@@ -25,32 +24,38 @@ fun LoginScreen(
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 12.dp),
-    ) {
-        LoginIconApp()
-        Spacer(modifier = Modifier.height(24.dp))
-        LoginTitle()
-        Spacer(modifier = Modifier.height(32.dp))
-        LoginForm(
-            emailChange = viewModel::onEmailChange,
-            state = state,
-            passwordChange = viewModel::onPasswordChange
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        PrimaryButton(
-            text = "Sign In",
-            onClick = {
-                focusManager.clearFocus()
-                viewModel.onLoginClickWithCallback(onSuccess = onNavigateToMainRoute)
-            },
-            enabled = state.isFormFilled,
-            iconResId = R.drawable.ic_right_arrow
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        LoginFooter(onNavigateToSignUp = onNavigateToSignUp)
+    Scaffold(
+        modifier = Modifier.fillMaxSize()
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .padding(all = 12.dp)
+        ) {
+            LoginIconApp()
+            Spacer(modifier = Modifier.height(24.dp))
+            LoginTitle()
+            Spacer(modifier = Modifier.height(32.dp))
+            LoginForm(
+                emailChange = viewModel::onEmailChange,
+                state = state,
+                passwordChange = viewModel::onPasswordChange
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+            PrimaryButton(
+                text = "Sign In",
+                onClick = {
+                    focusManager.clearFocus()
+                    viewModel.onLoginClickWithCallback(onSuccess = onNavigateToMainRoute)
+                },
+                enabled = state.isFormFilled,
+                iconResId = R.drawable.ic_right_arrow
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            LoginFooter(onNavigateToSignUp = onNavigateToSignUp)
+        }
+
     }
 }
 
