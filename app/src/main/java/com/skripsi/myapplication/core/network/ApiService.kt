@@ -7,10 +7,14 @@ import com.skripsi.myapplication.model.VerifyRequest
 import com.skripsi.myapplication.model.LoginRequest
 import com.skripsi.myapplication.model.LoginResponse
 import com.skripsi.myapplication.model.ProfileData
+import com.skripsi.myapplication.model.PointEarnedResponse
+import com.skripsi.myapplication.model.PaginatedResponse
+import com.skripsi.myapplication.model.HistoryItem
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
     @POST("auth/registration")
@@ -24,4 +28,14 @@ interface ApiService {
 
     @GET("user/profile")
     suspend fun getProfileData(): Response<ApiResponse<ProfileData>>
+
+    @GET("history/point-earned")
+    suspend fun getPointEarned(): Response<ApiResponse<PointEarnedResponse>>
+
+    @GET("history")
+    suspend fun getHistory(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("type") type: String? = null
+    ): Response<ApiResponse<PaginatedResponse<HistoryItem>>>
 }
