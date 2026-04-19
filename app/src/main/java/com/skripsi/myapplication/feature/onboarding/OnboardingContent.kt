@@ -30,7 +30,7 @@ fun OnboardingContent() {
     ) {
         Box(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(vertical = 8.dp)
                 .clip(shape = RoundedCornerShape(size = 16.dp))
         ) {
             Image(
@@ -76,7 +76,7 @@ fun OnboardingContent() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 24.dp),
+                .padding(vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(

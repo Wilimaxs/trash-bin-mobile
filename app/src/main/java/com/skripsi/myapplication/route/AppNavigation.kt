@@ -23,7 +23,6 @@ import com.skripsi.myapplication.utils.snackbar.CustomTopSnackBarHost
 
 @Composable
 fun AppNavigation(
-    modifier: Modifier = Modifier,
     authViewModel: AuthViewModel = hiltViewModel()
 ) {
     val navController = rememberNavController()
@@ -77,7 +76,6 @@ fun AppNavigation(
         NavHost(
             navController = navController,
             startDestination = Screen.Onboarding.route,
-            modifier = modifier
         ) {
             composable(Screen.Loading.route) {
                 LoadingScreen()

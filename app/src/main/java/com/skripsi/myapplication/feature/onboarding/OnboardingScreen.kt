@@ -14,27 +14,33 @@ import com.skripsi.myapplication.utils.composables.PrimaryButton
 fun OnBoardingScreen(
     onGetStartedClick: () -> Unit = {}
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(vertical = 12.dp)
-    ) {
-        OnboardingHeader()
+    Scaffold(
+        modifier = Modifier.fillMaxSize()
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .padding(all = 12.dp)
+        ) {
+            OnboardingHeader()
 
-        Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1f))
 
-        OnboardingContent()
+            OnboardingContent()
 
-        Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.weight(1f))
 
-        PrimaryButton(
-            text = "Get Started",
-            onClick = onGetStartedClick,
-            modifier = Modifier.padding(horizontal = 24.dp),
-            iconResId = R.drawable.ic_right_arrow,
-            iconContentDescription = "Get Started Icon"
-        )
+            PrimaryButton(
+                text = "Get Started",
+                onClick = onGetStartedClick,
+                modifier = Modifier.padding(horizontal = 24.dp),
+                iconResId = R.drawable.ic_right_arrow,
+                iconContentDescription = "Get Started Icon"
+            )
+        }
     }
+
 }
 
 @Preview(showBackground = true)
