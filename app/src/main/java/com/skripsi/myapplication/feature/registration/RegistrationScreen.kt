@@ -13,12 +13,15 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skripsi.myapplication.R
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 import com.skripsi.myapplication.feature.registration.composable.RegistrationForm
 import com.skripsi.myapplication.feature.registration.composable.RegistrationHeader
 import com.skripsi.myapplication.feature.registration.composable.RegistrationStickyFooter
+import com.skripsi.myapplication.utils.composables.LoadingOverlay
+import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 
 @Composable
 fun RegistrationScreen(
@@ -28,6 +31,13 @@ fun RegistrationScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(state.errorMessages) {
+        state.errorMessages?.let { msg ->
+            CustomSnackBarManager.showError(msg)
+            // Clear message if needed by your viewmodel logic
+        }
+    }
 
     Scaffold(
         modifier = Modifier
@@ -88,6 +98,8 @@ fun RegistrationScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
         }
+        
+        LoadingOverlay(isLoading = state.isLoading)
     }
 }
 

@@ -1,6 +1,10 @@
 package com.skripsi.myapplication.feature.registration
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.skripsi.myapplication.core.network.NetworkResult
+import com.skripsi.myapplication.model.RegisterRequest
+import com.skripsi.myapplication.repository.AuthRepository
 import com.skripsi.myapplication.utils.validation.ConfirmPasswordValidator
 import com.skripsi.myapplication.utils.validation.EmailValidator
 import com.skripsi.myapplication.utils.validation.FullNameValidator
@@ -10,10 +14,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegistrationViewModel @Inject constructor() : ViewModel() {
+class RegistrationViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(RegistrationState())
     val state: StateFlow<RegistrationState> = _state.asStateFlow()
@@ -89,9 +96,29 @@ class RegistrationViewModel @Inject constructor() : ViewModel() {
         }
 
         if (fullNameError == null && emailError == null && passwordError == null && confirmPasswordError == null) {
-            // TODO: Lakukan hit API Register di sini
-            // _state.update { it.copy(isLoading = true) }
-            onSuccess()
+            _state.update { it.copy(isLoading = true, errorMessages = null) }
+
+            viewModelScope.launch {
+                val request = RegisterRequest(
+                    email = currentState.email,
+                    password = currentState.password,
+                    passwordConfirmation = currentState.confirmPassword,
+                    fullName = currentState.fullName
+                )
+
+                when (val result = authRepository.register(request)) {
+                    is NetworkResult.Success -> {
+                        _state.update { it.copy(isLoading = false) }
+                        onSuccess()
+                    }
+                    is NetworkResult.Error -> {
+                        _state.update { it.copy(isLoading = false, errorMessages = result.message) }
+                    }
+                    is NetworkResult.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
+                }
+            }
         }
     }
 }

@@ -18,7 +18,9 @@ data class RegistrationState(
     val confirmPasswordErrorMessage: String? = null,
 
     val isTermsAccepted: Boolean = false,
-    val isLoading: Boolean = false
+
+    val isLoading: Boolean = false,
+    val errorMessages: String? = null
 ) {
     val isFormFilled: Boolean
         get() = fullName.isNotEmpty() && 
