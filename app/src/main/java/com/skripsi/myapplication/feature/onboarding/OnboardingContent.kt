@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skripsi.myapplication.R
-import com.skripsi.myapplication.core.theme.TextSecondary
 import com.skripsi.myapplication.core.theme.White
 
 @Composable
@@ -45,7 +43,7 @@ fun OnboardingContent() {
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(all = 16.dp)
-                    .background(Color.White, shape = RoundedCornerShape(percent = 50))
+                    .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.9f), shape = RoundedCornerShape(percent = 50))
                     .padding(horizontal = 12.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -56,7 +54,9 @@ fun OnboardingContent() {
                 Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = "SMART RVM",
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 )
             }
 
@@ -84,14 +84,15 @@ fun OnboardingContent() {
                 style = MaterialTheme.typography.headlineLarge.copy(
                     fontSize = 27.sp,
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
                 ),
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = "Join the EcoBin community to easily locate smart bins, recycle your waste, and earn exciting rewards for every bottle and can you save.",
                 style = MaterialTheme.typography.labelLarge.copy(
-                    color = TextSecondary,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 ),
             )

@@ -20,7 +20,8 @@ fun OnboardingHeader(
         Text(
             text = "EcoBin",
             style = MaterialTheme.typography.titleLarge.copy(
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
             )
         )
     }
