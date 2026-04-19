@@ -46,7 +46,9 @@ class AuthViewModel @Inject constructor(
                 _authState.value = AuthState.Onboarding
             } else {
                 val token = secureStorage.getToken()
-                if (token.isNullOrEmpty()) {
+                val refreshToken = secureStorage.getRefreshToken()
+
+                if (token.isNullOrEmpty() || refreshToken.isNullOrEmpty()) {
                     _authState.value = AuthState.Unauthenticated
                 } else {
                     _authState.value = AuthState.Authenticated

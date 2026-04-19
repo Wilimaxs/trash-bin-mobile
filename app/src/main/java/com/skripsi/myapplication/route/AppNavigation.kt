@@ -91,10 +91,8 @@ fun AppNavigation(
                     onNavigateToSignUp = {
                         navController.navigate(Screen.Registration.route)
                     },
-                    onNavigateToMainRoute = {
-                        navController.navigate(Screen.Home.route) {
-                            popUpTo(Screen.Login.route) { inclusive = true }
-                        }
+                    onNavigateToMainRoute = { token, refreshToken ->
+                        authViewModel.setAuthenticated(token, refreshToken)
                     }
                 )
             }

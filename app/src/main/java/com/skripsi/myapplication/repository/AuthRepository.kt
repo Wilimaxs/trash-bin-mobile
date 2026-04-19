@@ -6,6 +6,8 @@ import com.skripsi.myapplication.core.network.NetworkResult
 import com.skripsi.myapplication.model.RegisterRequest
 import com.skripsi.myapplication.model.RegisterResponse
 import com.skripsi.myapplication.model.VerifyRequest
+import com.skripsi.myapplication.model.LoginRequest
+import com.skripsi.myapplication.model.LoginResponse
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
@@ -39,6 +41,22 @@ class AuthRepository @Inject constructor(
 
         if (result is NetworkResult.Success) {
             secureStorage.clearTempVerifyToken()
+        }
+
+        return result
+    }
+
+    suspend fun login(request: LoginRequest): NetworkResult<LoginResponse> {
+        val result = safeApiCall { api.login(request) }
+
+        if (result is NetworkResult.Success) {
+            val accessToken = result.data.accessToken
+            val refreshToken = result.data.refreshToken
+
+            if (accessToken.isNotEmpty() && refreshToken.isNotEmpty()) {
+                secureStorage.saveToken(accessToken)
+                secureStorage.saveRefreshToken(refreshToken)
+            }
         }
 
         return result

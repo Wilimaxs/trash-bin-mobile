@@ -9,7 +9,8 @@ data class LoginState(
     val isPasswordError: Boolean = false,
     val passwordErrorMessage: String? = null,
 
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
 ) {
     val isFormFilled: Boolean
         get() = email.isNotEmpty() && password.isNotEmpty()

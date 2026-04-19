@@ -14,16 +14,24 @@ import com.skripsi.myapplication.feature.login.composable.LoginFooter
 import com.skripsi.myapplication.feature.login.composable.LoginForm
 import com.skripsi.myapplication.feature.login.composable.LoginIconApp
 import com.skripsi.myapplication.feature.login.composable.LoginTitle
+import com.skripsi.myapplication.utils.composables.LoadingOverlay
 import com.skripsi.myapplication.utils.composables.PrimaryButton
+import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 
 @Composable
 fun LoginScreen(
     onNavigateToSignUp: () -> Unit = {},
-    onNavigateToMainRoute: () -> Unit = {},
+    onNavigateToMainRoute: (String, String) -> Unit = { _, _ -> },
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(state.errorMessage) {
+        state.errorMessage?.let { msg ->
+            CustomSnackBarManager.showError(msg)
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize()
@@ -56,6 +64,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.weight(1f))
             LoginFooter(onNavigateToSignUp = onNavigateToSignUp)
         }
+
+        LoadingOverlay(isLoading = state.isLoading)
 
     }
 }
