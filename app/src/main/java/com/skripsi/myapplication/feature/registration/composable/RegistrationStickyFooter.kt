@@ -29,11 +29,11 @@ fun RegistrationStickyFooter(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-            .padding(top = 16.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
+            .padding(horizontal = 12.dp, vertical = 6.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         ) {
             Checkbox(
                 checked = isTermsAccepted,

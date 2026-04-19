@@ -36,7 +36,9 @@ fun RegistrationScreen(
         topBar = {
             IconButton(
                 onClick = onNavigateBack,
-                modifier = Modifier.padding(start = 8.dp, top = 8.dp)
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .padding(start = 4.dp)
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_left_arrow),
@@ -46,29 +48,29 @@ fun RegistrationScreen(
             }
         },
         bottomBar = {
-            // Posisi tombol dan checkbox menempel (sticky) di bagian bawah
-            RegistrationStickyFooter(
-                isTermsAccepted = state.isTermsAccepted,
-                onTermsChange = viewModel::onTermsAcceptedChange,
-                isFormFilled = state.isFormFilled,
-                onRegisterClick = {
-                    focusManager.clearFocus()
-                    // Simulasi atau logic pemanggilan API, dsb.
-                    viewModel.onRegisterClick(
-                        onSuccess = { onNavigateToVerify() }
-                    )
-                }
-            )
+            Box(
+                modifier = Modifier.navigationBarsPadding()
+            ) {
+                RegistrationStickyFooter(
+                    isTermsAccepted = state.isTermsAccepted,
+                    onTermsChange = viewModel::onTermsAcceptedChange,
+                    isFormFilled = state.isFormFilled,
+                    onRegisterClick = {
+                        focusManager.clearFocus()
+                        viewModel.onRegisterClick(
+                            onSuccess = { onNavigateToVerify() }
+                        )
+                    }
+                )
+            }
         }
     ) { paddingValues ->
-
-        // Konten utama bisa discroll ketika form banyak atau di hp kecil
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 12.dp)
         ) {
 
             RegistrationHeader()
