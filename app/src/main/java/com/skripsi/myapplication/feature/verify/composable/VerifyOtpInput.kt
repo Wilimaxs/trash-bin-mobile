@@ -40,7 +40,6 @@ fun VerifyOtpInput(
 ) {
     val focusRequester = remember { FocusRequester() }
 
-    // Forced autofocus ke kotak OTP pada saat screen ter-render
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }

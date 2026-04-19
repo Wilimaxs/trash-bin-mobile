@@ -40,12 +40,14 @@ fun VerifyScreen(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF9FAFB)), // Abu-abu terang persis gambar
+            .background(Color(0xFFF9FAFB)),
         containerColor = Color.Transparent,
         topBar = {
             IconButton(
                 onClick = onNavigateBack,
-                modifier = Modifier.padding(start = 8.dp, top = 8.dp)
+                modifier = Modifier
+                    .padding(start = 6.dp)
+                    .statusBarsPadding()
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_left_arrow),
@@ -55,12 +57,12 @@ fun VerifyScreen(
             }
         },
         bottomBar = {
-            // Sticky verify bottom button
             Column(
                 modifier = Modifier
+                    .navigationBarsPadding()
                     .fillMaxWidth()
                     .background(Color.White, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                    .padding(top = 24.dp, bottom = 24.dp, start = 24.dp, end = 24.dp)
+                    .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 PrimaryButton(
                     text = "Verify",
@@ -78,7 +80,7 @@ fun VerifyScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .padding(horizontal = 24.dp),
+                .padding(horizontal = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(16.dp))
@@ -97,7 +99,6 @@ fun VerifyScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Timer & Resend Button
             if (state.timerActive) {
                 val formattedTime = "00:${state.timerSeconds.toString().padStart(2, '0')}"
                 Text(

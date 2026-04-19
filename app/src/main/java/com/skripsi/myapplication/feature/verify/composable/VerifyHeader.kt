@@ -26,16 +26,13 @@ fun VerifyHeader() {
                 color = TextPrimary
             )
         )
-
         Spacer(modifier = Modifier.height(8.dp))
-
         Text(
-            text = "Please enter the 6-digit verification code\nsent to your email address.",
+            text = "Please enter the 6-digit verification code sent to your email address.",
             style = MaterialTheme.typography.bodyLarge.copy(
                 color = TextSecondary,
                 textAlign = TextAlign.Center
             ),
-            modifier = Modifier.padding(horizontal = 16.dp)
         )
     }
 }
