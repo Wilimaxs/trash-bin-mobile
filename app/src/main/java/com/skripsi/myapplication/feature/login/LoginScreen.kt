@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skripsi.myapplication.R
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 import com.skripsi.myapplication.feature.login.composable.LoginFooter
 import com.skripsi.myapplication.feature.login.composable.LoginForm
 import com.skripsi.myapplication.feature.login.composable.LoginIconApp
@@ -62,6 +63,7 @@ fun LoginScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewLoginScreen() {
-    MaterialTheme {
+    SmartTrashBinTheme {
+        LoginScreen()
     }
 }

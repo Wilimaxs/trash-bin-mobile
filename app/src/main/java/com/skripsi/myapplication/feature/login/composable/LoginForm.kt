@@ -21,7 +21,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
-import com.skripsi.myapplication.core.theme.green
 import com.skripsi.myapplication.feature.login.LoginState
 import com.skripsi.myapplication.utils.composables.TextFormField
 
@@ -73,7 +72,7 @@ fun LoginForm(
         Text(
             text = "Forgot Password?",
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = green,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             ),
             modifier = Modifier

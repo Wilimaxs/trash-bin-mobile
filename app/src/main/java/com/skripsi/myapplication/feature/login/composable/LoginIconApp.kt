@@ -12,8 +12,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.MaterialTheme
 import com.skripsi.myapplication.R
-import com.skripsi.myapplication.core.theme.green
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 
 @Composable
 fun LoginIconApp() {
@@ -21,7 +22,7 @@ fun LoginIconApp() {
         modifier = Modifier
             .size(48.dp)
             .clip(CircleShape)
-            .background(color = green.copy(alpha = 0.5F)),
+            .background(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5F)),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -35,5 +36,7 @@ fun LoginIconApp() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewLoginIconApp() {
-    LoginIconApp()
+    SmartTrashBinTheme {
+        LoginIconApp()
+    }
 }

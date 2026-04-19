@@ -1,6 +1,5 @@
 package com.skripsi.myapplication.core.theme
 
-import androidx.compose.material3.Text
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -20,7 +19,7 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 27.sp,
     ),
-    // overlay title -> referer onboarding image text (text-3xl font-bold leading-tight)
+    // overlay title -> referer onboarding image text (text-3rd font-bold leading-tight)
     headlineMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,

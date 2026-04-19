@@ -14,8 +14,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
-import com.skripsi.myapplication.core.theme.TextSecondary
-import com.skripsi.myapplication.core.theme.green
 
 @Composable
 fun LoginFooter(
@@ -28,12 +26,12 @@ fun LoginFooter(
     ) {
         Text(
             text = "Don't have an account? ",
-            style = MaterialTheme.typography.bodyMedium.copy(color = TextSecondary)
+            style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
         )
         Text(
             text = "Sign Up",
             style = MaterialTheme.typography.bodyMedium.copy(
-                color = green,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
             ),
             modifier = Modifier

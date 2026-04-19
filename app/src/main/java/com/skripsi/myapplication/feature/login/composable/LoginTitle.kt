@@ -11,8 +11,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
-import com.skripsi.myapplication.core.theme.TextPrimary
-import com.skripsi.myapplication.core.theme.TextSecondary
 
 @Composable
 fun LoginTitle() {
@@ -21,14 +19,14 @@ fun LoginTitle() {
             text = "Welcome Back!",
             style = MaterialTheme.typography.headlineLarge.copy(
                 fontWeight = FontWeight.Bold,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onSurface
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Sign in to continue tracking your recycling rewards and carbon footprint.",
             style = MaterialTheme.typography.bodyLarge.copy(
-                color = TextSecondary
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         )
     }

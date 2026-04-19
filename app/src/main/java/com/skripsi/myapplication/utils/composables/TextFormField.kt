@@ -16,8 +16,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.skripsi.myapplication.R
-import com.skripsi.myapplication.core.theme.TextPrimary
-import com.skripsi.myapplication.core.theme.TextHint
 
 @Composable
 fun TextFormField(
@@ -37,7 +35,7 @@ fun TextFormField(
     var passwordVisible by remember { mutableStateOf(false) }
     val isFilled = value.isNotEmpty()
 
-    val containerColor = if (isFilled) Color.White else Color(0xFFF3F4F6)
+    val containerColor = if (isFilled) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
 
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
@@ -50,7 +48,7 @@ fun TextFormField(
                 }
             },
             style = MaterialTheme.typography.bodyMedium,
-            color = TextPrimary,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -58,7 +56,7 @@ fun TextFormField(
             value = value,
             onValueChange = onValueChange,
             placeholder = {
-                Text(text = hint, color = TextHint, style = MaterialTheme.typography.bodyMedium)
+                Text(text = hint, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
             },
             isError = isError,
             keyboardOptions = keyboardOptions,
@@ -67,12 +65,12 @@ fun TextFormField(
             visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
             shape = RoundedCornerShape(size = 12.dp),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedContainerColor = Color.White,
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
                 unfocusedContainerColor = containerColor,
-                disabledContainerColor = Color(0xFFF3F4F6),
+                disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
                 errorContainerColor = containerColor,
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = Color(0xFFE5E7EB),
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
                 errorBorderColor = MaterialTheme.colorScheme.error
             ),
             trailingIcon = {

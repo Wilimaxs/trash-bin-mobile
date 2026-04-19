@@ -12,12 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.skripsi.myapplication.core.theme.TextPrimary
-import com.skripsi.myapplication.core.theme.green
 
 @Composable
 fun PrimaryButton(
@@ -33,10 +30,10 @@ fun PrimaryButton(
         enabled = enabled,
         shape = RoundedCornerShape(size = 12.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = green,
-            contentColor = TextPrimary,
-            disabledContainerColor = Color.LightGray,
-            disabledContentColor = Color.Gray
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+            disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
         ),
         modifier = modifier
             .fillMaxWidth()
