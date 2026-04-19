@@ -11,14 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skripsi.myapplication.R
-import com.skripsi.myapplication.core.theme.TextPrimary
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 
 @Composable
 fun ProfileMenuItem(
@@ -29,8 +28,8 @@ fun ProfileMenuItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .border(width = 1.dp, color = Color(0xFFF3F4F6), shape = RoundedCornerShape(12.dp))
-            .background(Color.White, shape = RoundedCornerShape(12.dp))
+            .border(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant, shape = RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp))
             .clickable { onClick() }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -39,13 +38,13 @@ fun ProfileMenuItem(
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .background(Color(0xFFE8F5E9), shape = RoundedCornerShape(8.dp)), // Light green bg
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), shape = RoundedCornerShape(8.dp)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 painter = painterResource(icon),
                 contentDescription = title,
-                tint = Color(0xFF0F4A24), // Dark green icon
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp)
             )
         }
@@ -57,7 +56,7 @@ fun ProfileMenuItem(
             text = title,
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontWeight = FontWeight.SemiBold,
-                color = TextPrimary,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 16.sp
             ),
             modifier = Modifier.weight(1f)
@@ -67,7 +66,7 @@ fun ProfileMenuItem(
         Icon(
            painter = painterResource(R.drawable.ic_right_arrow),
             contentDescription = "Arrow Right",
-            tint = Color(0xFF9CA3AF) // Gray
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
@@ -75,12 +74,13 @@ fun ProfileMenuItem(
 @Preview(showBackground = true)
 @Composable
 fun ProfileMenuItemPreview() {
-    Box(modifier = Modifier.padding(16.dp)) {
-        ProfileMenuItem(
-            icon = R.drawable.ic_help,
-            title = "Edit Profile",
-            onClick = {}
-        )
+    SmartTrashBinTheme {
+        Box(modifier = Modifier.padding(16.dp)) {
+            ProfileMenuItem(
+                icon = R.drawable.ic_help,
+                title = "Edit Profile",
+                onClick = {}
+            )
+        }
     }
 }
-

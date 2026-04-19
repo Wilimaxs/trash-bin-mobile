@@ -11,7 +11,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skripsi.myapplication.R
-import com.skripsi.myapplication.core.theme.TextPrimary
-import com.skripsi.myapplication.core.theme.TextSecondary
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 import com.skripsi.myapplication.feature.profile.composable.ProfileCard
 import com.skripsi.myapplication.feature.profile.composable.ProfileMenuItem
 
@@ -34,7 +32,7 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 12.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -45,7 +43,7 @@ fun ProfileScreen(
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
-                color = TextPrimary
+                color = MaterialTheme.colorScheme.onBackground
             )
         )
 
@@ -67,7 +65,7 @@ fun ProfileScreen(
                 text = "ACCOUNT SETTINGS",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = TextSecondary,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 12.sp,
                     letterSpacing = 1.sp
                 )
@@ -109,7 +107,7 @@ fun ProfileScreen(
             Icon(
                 painter = painterResource(R.drawable.ic_logout),
                 contentDescription = "Log Out",
-                tint = Color(0xFFEF4444),
+                tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -117,7 +115,7 @@ fun ProfileScreen(
                 text = "Log Out",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFFEF4444),
+                    color = MaterialTheme.colorScheme.error,
                     fontSize = 16.sp
                 )
             )
@@ -129,18 +127,18 @@ fun ProfileScreen(
         Text(
             text = "App Version 2.4.0",
             style = MaterialTheme.typography.bodySmall.copy(
-                color = Color(0xFF9CA3AF), // Abu-abu
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         )
 
-        Spacer(modifier = Modifier.height(10.dp)) // Extra space for Bottom Navigation
+        Spacer(modifier = Modifier.height(10.dp))
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
-    MaterialTheme {
+    SmartTrashBinTheme {
         ProfileScreen()
     }
 }
