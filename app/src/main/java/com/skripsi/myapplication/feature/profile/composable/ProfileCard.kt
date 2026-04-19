@@ -18,8 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.layout.ContentScale
 import com.skripsi.myapplication.R
-// import coil.compose.AsyncImage // Coil for Avatar from url
+import coil.compose.AsyncImage // Coil for Avatar from url
 import com.skripsi.myapplication.model.ProfileData
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 
@@ -41,8 +42,22 @@ fun ProfileCard(profileData: ProfileData?) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (profileData?.avatarUrl != null) {
-                    // TODO: Pakai AsyncImage Coil
-                    // AsyncImage(...)
+                    Box(
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(CircleShape)
+                            .background(Color.White),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        AsyncImage(
+                            model = profileData.avatarUrl,
+                            contentDescription = "Avatar",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .size(72.dp)
+                                .clip(CircleShape)
+                        )
+                    }
                 } else {
                     // Placeholder
                     Box(

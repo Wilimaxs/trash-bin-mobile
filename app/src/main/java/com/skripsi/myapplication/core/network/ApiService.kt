@@ -1,12 +1,12 @@
 package com.skripsi.myapplication.core.network
 
 import com.skripsi.myapplication.model.ApiResponse
-import com.skripsi.myapplication.model.User
 import com.skripsi.myapplication.model.RegisterRequest
 import com.skripsi.myapplication.model.RegisterResponse
 import com.skripsi.myapplication.model.VerifyRequest
 import com.skripsi.myapplication.model.LoginRequest
 import com.skripsi.myapplication.model.LoginResponse
+import com.skripsi.myapplication.model.ProfileData
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -23,5 +23,5 @@ interface ApiService {
     suspend fun verifyOtp(@Body request: VerifyRequest): Response<ApiResponse<Any?>>
 
     @GET("user/profile")
-    suspend fun getProfile(): Response<ApiResponse<User>>
+    suspend fun getProfileData(): Response<ApiResponse<ProfileData>>
 }
