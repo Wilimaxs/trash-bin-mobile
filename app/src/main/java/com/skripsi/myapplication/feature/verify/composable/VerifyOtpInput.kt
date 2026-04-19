@@ -20,14 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.skripsi.myapplication.core.theme.TextPrimary
-import com.skripsi.myapplication.core.theme.green
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 import androidx.compose.material3.Surface
 
 @Composable
@@ -64,9 +62,9 @@ fun VerifyOtpInput(
                     val isFocused = index == otpText.length
                     val borderColor = when {
                         isError -> MaterialTheme.colorScheme.error
-                        isSuccess -> green
-                        isFocused -> Color.Black
-                        else -> Color.LightGray
+                        isSuccess -> MaterialTheme.colorScheme.primary
+                        isFocused -> MaterialTheme.colorScheme.onSurface
+                        else -> MaterialTheme.colorScheme.outline
                     }
 
                     val borderWidth = if (isFocused || isError || isSuccess) 2.dp else 1.dp
@@ -77,14 +75,14 @@ fun VerifyOtpInput(
                             .aspectRatio(0.85f)
                             .padding(horizontal = 4.dp)
                             .border(width = borderWidth, color = borderColor, shape = RoundedCornerShape(12.dp))
-                            .background(Color.White, shape = RoundedCornerShape(12.dp)),
+                            .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp)),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = char,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            color = TextPrimary
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                     }
                 }
@@ -96,12 +94,14 @@ fun VerifyOtpInput(
 @Preview(showBackground = true)
 @Composable
 fun VerifyOtpInputPreview() {
-    Surface(modifier = Modifier.padding(16.dp)) {
-        VerifyOtpInput(
-            otpText = "123",
-            onOtpTextChange = {},
-            isError = false,
-            isSuccess = false
-        )
+    SmartTrashBinTheme {
+        Surface(modifier = Modifier.padding(16.dp)) {
+            VerifyOtpInput(
+                otpText = "123",
+                onOtpTextChange = {},
+                isError = false,
+                isSuccess = false
+            )
+        }
     }
 }

@@ -10,7 +10,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -22,8 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skripsi.myapplication.R
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
-import com.skripsi.myapplication.core.theme.TextSecondary
-import com.skripsi.myapplication.core.theme.green
 import com.skripsi.myapplication.feature.verify.composable.VerifyHeader
 import com.skripsi.myapplication.feature.verify.composable.VerifyOtpInput
 import com.skripsi.myapplication.utils.composables.PrimaryButton
@@ -40,8 +37,8 @@ fun VerifyScreen(
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF9FAFB)),
-        containerColor = Color.Transparent,
+            .background(MaterialTheme.colorScheme.background),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             IconButton(
                 onClick = onNavigateBack,
@@ -52,7 +49,7 @@ fun VerifyScreen(
                 Icon(
                     painter = painterResource(R.drawable.ic_left_arrow),
                     contentDescription = "Back",
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         },
@@ -61,7 +58,7 @@ fun VerifyScreen(
                 modifier = Modifier
                     .navigationBarsPadding()
                     .fillMaxWidth()
-                    .background(Color.White, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                     .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 PrimaryButton(
@@ -104,22 +101,22 @@ fun VerifyScreen(
                 Text(
                     text = buildAnnotatedString {
                         append("Didn't receive the code? ")
-                        withStyle(style = SpanStyle(color = green, fontWeight = FontWeight.Bold)) {
+                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)) {
                             append("Resend in $formattedTime")
                         }
                     },
-                    style = MaterialTheme.typography.bodyMedium.copy(color = TextSecondary),
+                    style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
                 )
             } else {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = "Didn't receive the code? ",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = TextSecondary)
+                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                     )
                     Text(
                         text = "Resend",
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            color = green,
+                            color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
                             textDecoration = androidx.compose.ui.text.style.TextDecoration.Underline
                         ),
