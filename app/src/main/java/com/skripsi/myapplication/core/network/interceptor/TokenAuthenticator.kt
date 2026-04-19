@@ -70,6 +70,9 @@ class TokenAuthenticator @Inject constructor(
         return try {
             val refreshClient = OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+                .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                .writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                 .build()
 
             val jsonBody = """{"refresh_token": "$refreshToken"}"""
