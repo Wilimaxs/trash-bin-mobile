@@ -25,17 +25,15 @@ import com.skripsi.myapplication.model.ProfileData
 @Composable
 fun ProfileCard(profileData: ProfileData?) {
     Surface(
-        color = Color(0xFFF2FCF5), // Light mint green background per desain
+        color = Color(0xFFF2FCF5),
         shape = RoundedCornerShape(24.dp),
-        shadowElevation = 2.dp, // Slight elevation
+        shadowElevation = 2.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(24.dp)
         ) {
-            // Top Section (Avatar + Info)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                // Avatar Placeholder atau Gambar
                 if (profileData?.avatarUrl != null) {
                     // TODO: Pakai AsyncImage Coil
                     // AsyncImage(...)
@@ -80,7 +78,6 @@ fun ProfileCard(profileData: ProfileData?) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Divider / Bottom Section
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -112,7 +109,6 @@ fun ProfileCard(profileData: ProfileData?) {
                     }
                 }
 
-                // Vertical Divider Line
                 Box(
                     modifier = Modifier
                         .height(32.dp)
@@ -120,7 +116,6 @@ fun ProfileCard(profileData: ProfileData?) {
                         .background(Color(0xFFE5E7EB))
                 )
 
-                // Total Items
                 Column(
                     modifier = Modifier.weight(1f),
                     horizontalAlignment = Alignment.CenterHorizontally
