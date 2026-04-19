@@ -26,7 +26,7 @@ fun ConnectedContent(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 12.dp),
         contentPadding = PaddingValues(bottom = 12.dp),
     ) {
         item {

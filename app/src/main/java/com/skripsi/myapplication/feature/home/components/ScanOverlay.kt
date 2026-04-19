@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.skripsi.myapplication.R
 
 @Composable
 fun ScanOverlay(
@@ -27,7 +26,7 @@ fun ScanOverlay(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(horizontal = 32.dp)
+            modifier = Modifier.padding(horizontal = 12.dp)
         ) {
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_dialog_info), // Placeholder for QR icon
