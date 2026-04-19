@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.skripsi.myapplication.core.theme.green
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 import com.skripsi.myapplication.feature.history.HistoryScreen
 import com.skripsi.myapplication.feature.home.HomeScreen
 import com.skripsi.myapplication.feature.profile.ProfileScreen
@@ -31,10 +31,10 @@ fun MainNavigationScreen() {
     )
 
     Scaffold(
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
             NavigationBar(
-                containerColor = Color.White,
+                containerColor = MaterialTheme.colorScheme.surface,
                 tonalElevation = 8.dp
             ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -63,14 +63,15 @@ fun MainNavigationScreen() {
                         label = {
                             Text(
                                 text = item.title,
+                                style = MaterialTheme.typography.labelSmall,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                             )
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = green,
-                            selectedTextColor = green,
-                            unselectedIconColor = Color.Gray,
-                            unselectedTextColor = Color.Gray,
+                            selectedIconColor = MaterialTheme.colorScheme.primary,
+                            selectedTextColor = MaterialTheme.colorScheme.primary,
+                            unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             indicatorColor = Color.Transparent
                         )
                     )
@@ -107,5 +108,7 @@ fun MainNavigationScreen() {
 @Preview(showBackground = true)
 @Composable
 fun MainNavigationScreenPreview() {
-    MainNavigationScreen()
+    SmartTrashBinTheme {
+        MainNavigationScreen()
+    }
 }
