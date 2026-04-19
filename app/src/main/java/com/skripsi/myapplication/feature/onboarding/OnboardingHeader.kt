@@ -18,7 +18,7 @@ fun OnboardingHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+            .padding(horizontal = 16.dp),
     ) {
         Text(
             text = "EcoBin",

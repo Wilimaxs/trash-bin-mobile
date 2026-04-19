@@ -17,7 +17,7 @@ fun OnBoardingScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .safeDrawingPadding()
+            .padding(vertical = 12.dp)
     ) {
         OnboardingHeader()
 

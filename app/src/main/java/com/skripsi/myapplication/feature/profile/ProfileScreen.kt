@@ -39,8 +39,6 @@ fun ProfileScreen(
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
-
         // Title
         Text(
             text = "My Profile",
