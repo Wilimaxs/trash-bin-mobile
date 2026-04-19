@@ -27,7 +27,6 @@ fun LoginIconApp() {
         Icon(
             painter = painterResource(id = R.drawable.ic_recycle),
             contentDescription = "Icon recycle",
-            tint = green,
             modifier = Modifier.size(24.dp)
         )
     }

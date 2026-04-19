@@ -28,8 +28,7 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .safeDrawingPadding()
-            .padding(horizontal = 24.dp, vertical = 24.dp),
+            .padding(horizontal = 24.dp, vertical = 12.dp),
     ) {
         LoginIconApp()
         Spacer(modifier = Modifier.height(24.dp))
