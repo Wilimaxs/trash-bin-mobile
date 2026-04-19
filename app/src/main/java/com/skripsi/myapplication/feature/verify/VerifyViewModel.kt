@@ -2,6 +2,8 @@ package com.skripsi.myapplication.feature.verify
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skripsi.myapplication.core.network.NetworkResult
+import com.skripsi.myapplication.repository.AuthRepository
 import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -14,7 +16,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class VerifyViewModel @Inject constructor() : ViewModel() {
+class VerifyViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(VerifyState())
     val state: StateFlow<VerifyState> = _state.asStateFlow()
@@ -56,15 +60,22 @@ class VerifyViewModel @Inject constructor() : ViewModel() {
         val currentOtp = _state.value.otpCode
 
         if (currentOtp.length == 6) {
-            // TODO: Ganti logika ini dengan pemanggilan API Verify sebetulnya
-            // Contoh mock test: Jika "123456" sukses, sisanya dianggap salah
-            if (currentOtp == "123456") {
-                _state.update { it.copy(isSuccess = true, isError = false) }
-                CustomSnackBarManager.showSuccess("OTP Verified Successfully!")
-                onSuccess()
-            } else {
-                _state.update { it.copy(isError = true, isSuccess = false) }
-                CustomSnackBarManager.showError("Invalid OTP Code!")
+            _state.update { it.copy(isLoading = true, errorMessage = null) }
+            
+            viewModelScope.launch {
+                when (val result = authRepository.verifyOtp(currentOtp)) {
+                    is NetworkResult.Success -> {
+                        _state.update { it.copy(isLoading = false, isSuccess = true, isError = false) }
+                        CustomSnackBarManager.showSuccess("Account successfully verified. You can now login.")
+                        onSuccess()
+                    }
+                    is NetworkResult.Error -> {
+                        _state.update { it.copy(isLoading = false, isError = true, isSuccess = false, errorMessage = result.message) }
+                    }
+                    is NetworkResult.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
+                }
             }
         }
     }

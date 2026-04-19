@@ -47,6 +47,18 @@ class SecureStorage @Inject constructor(
         return sharedPreferences.getString(KEY_REFRESH_TOKEN, null)
     }
 
+    fun saveTempVerifyToken(token: String) {
+        sharedPreferences.edit { putString(KEY_TEMP_VERIFY_TOKEN, token) }
+    }
+
+    fun getTempVerifyToken(): String? {
+        return sharedPreferences.getString(KEY_TEMP_VERIFY_TOKEN, null)
+    }
+
+    fun clearTempVerifyToken() {
+        sharedPreferences.edit { remove(KEY_TEMP_VERIFY_TOKEN) }
+    }
+
     fun clearAuth() {
         sharedPreferences.edit {
             remove(KEY_TOKEN)
@@ -61,5 +73,6 @@ class SecureStorage @Inject constructor(
     companion object {
         private const val KEY_TOKEN = "jwt_token"
         private const val KEY_REFRESH_TOKEN = "jwt_refresh_token"
+        private const val KEY_TEMP_VERIFY_TOKEN = "jwt_temp_verify_token"
     }
 }

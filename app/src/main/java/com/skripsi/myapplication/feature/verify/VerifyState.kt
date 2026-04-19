@@ -6,7 +6,8 @@ data class VerifyState(
     val isSuccess: Boolean = false,
     val timerActive: Boolean = true,
     val timerSeconds: Int = 60,
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
 ) {
     val isOtpComplete: Boolean
         get() = otpCode.length == 6

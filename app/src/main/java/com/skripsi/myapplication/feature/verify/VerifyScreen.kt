@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,7 +24,9 @@ import com.skripsi.myapplication.R
 import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 import com.skripsi.myapplication.feature.verify.composable.VerifyHeader
 import com.skripsi.myapplication.feature.verify.composable.VerifyOtpInput
+import com.skripsi.myapplication.utils.composables.LoadingOverlay
 import com.skripsi.myapplication.utils.composables.PrimaryButton
+import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 
 @Composable
 fun VerifyScreen(
@@ -33,6 +36,12 @@ fun VerifyScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(state.errorMessage) {
+        state.errorMessage?.let { msg ->
+            CustomSnackBarManager.showError(msg)
+        }
+    }
 
     Scaffold(
         modifier = Modifier
@@ -128,6 +137,8 @@ fun VerifyScreen(
                 }
             }
         }
+
+        LoadingOverlay(isLoading = state.isLoading)
     }
 }
 

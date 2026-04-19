@@ -13,3 +13,7 @@ data class RegisterResponse(
     @SerializedName("access_token") val accessToken: String
 )
 
+data class VerifyRequest(
+    @SerializedName("access_token") val accessToken: String,
+    @SerializedName("otp_code") val otpCode: String
+)
