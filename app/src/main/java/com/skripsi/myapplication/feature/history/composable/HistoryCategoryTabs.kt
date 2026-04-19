@@ -15,7 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.skripsi.myapplication.core.theme.TextSecondary
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun HistoryCategoryTabs(
@@ -34,20 +35,20 @@ fun HistoryCategoryTabs(
                 modifier = Modifier
                     .clickable { onCategorySelected(category) }
                     .background(
-                        color = if (isSelected) Color(0xFF102218) else Color.White,
+                        color = if (isSelected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.surface,
                         shape = RoundedCornerShape(20.dp)
                     )
                     .border(
                         width = 1.dp,
-                        color = if (isSelected) Color.Transparent else Color(0xFFE5E7EB),
+                        color = if (isSelected) Color.Transparent else MaterialTheme.colorScheme.outlineVariant,
                         shape = RoundedCornerShape(20.dp)
                     )
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 Text(
                     text = category,
-                    style = androidx.compose.material3.MaterialTheme.typography.bodyMedium.copy(
-                        color = if (isSelected) Color.White else TextSecondary,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = if (isSelected) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.onSurfaceVariant,
                         fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                         fontSize = 14.sp
                     )
@@ -60,7 +61,8 @@ fun HistoryCategoryTabs(
 @Preview(showBackground = true)
 @Composable
 fun HistoryCategoryTabsPreview() {
-    val categories = listOf("All", "Organik", "Anorganik", "B3")
-    HistoryCategoryTabs(categories, "All", {})
+    SmartTrashBinTheme {
+        val categories = listOf("All", "Organik", "Anorganik", "B3")
+        HistoryCategoryTabs(categories, "All", {})
+    }
 }
-

@@ -17,24 +17,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skripsi.myapplication.R
-import com.skripsi.myapplication.core.theme.TextPrimary
-import com.skripsi.myapplication.core.theme.TextSecondary
-import com.skripsi.myapplication.core.theme.green
 import com.skripsi.myapplication.model.HistoryItem
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 
 @Composable
 fun HistoryItemRow(item: HistoryItem) {
     val (iconColor, bgColor, iconVector) = when (item.compartmentType.lowercase()) {
-        "organik" -> Triple(green, Color(0xFFE8F5E9), R.drawable.ic_organic)
-        "anorganik" -> Triple(Color(0xFFFFB300), Color(0xFFFFF8E1),  R.drawable.ic_anorganic)
-        "b3" -> Triple(Color(0xFFE53935), Color(0xFFFFEBEE),  R.drawable.ic_b3)
-        else -> Triple(Color.Gray, Color(0xFFF3F4F6),  R.drawable.ic_organic)
+        "organik" -> Triple(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), R.drawable.ic_organic)
+        "anorganik" -> Triple(Color(0xFFFFB300), Color(0xFFFFB300).copy(alpha = 0.1f),  R.drawable.ic_anorganic)
+        "b3" -> Triple(MaterialTheme.colorScheme.error, MaterialTheme.colorScheme.error.copy(alpha = 0.1f),  R.drawable.ic_b3)
+        else -> Triple(Color.Gray, Color.Gray.copy(alpha = 0.1f),  R.drawable.ic_organic)
     }
 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp))
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -59,7 +57,7 @@ fun HistoryItemRow(item: HistoryItem) {
                 text = item.subCategory,
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.SemiBold,
-                    color = TextPrimary
+                    color = MaterialTheme.colorScheme.onSurface
                 ),
                 maxLines = 1,
             )
@@ -67,7 +65,7 @@ fun HistoryItemRow(item: HistoryItem) {
             Text(
                 text = "EcoBin-RVM-Alpha • ${item.createdAt.substring(0, 10)}",
                 style = MaterialTheme.typography.bodyMedium.copy(
-                    color = TextSecondary,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.sp
                 ),
                 maxLines = 1,
@@ -79,13 +77,13 @@ fun HistoryItemRow(item: HistoryItem) {
                 text = "+${item.pointsEarned}",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    color = green
+                    color = MaterialTheme.colorScheme.primary
                 )
             )
             Text(
                 text = "Pts",
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = TextSecondary,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.sp
                 )
             )
@@ -96,8 +94,10 @@ fun HistoryItemRow(item: HistoryItem) {
 @Preview(showBackground = true)
 @Composable
 fun HistoryItemRowPreview() {
-    val mock = HistoryItem(1, "", 1, "organik", "Kulit Pisang (x2)", "2026-04-24T14:30:00.000Z")
-    Box(modifier = Modifier.padding(16.dp)) {
-        HistoryItemRow(mock)
+    SmartTrashBinTheme {
+        val mock = HistoryItem(1, "", 1, "organik", "Kulit Pisang (x2)", "2026-04-24T14:30:00.000Z")
+        Box(modifier = Modifier.padding(16.dp)) {
+            HistoryItemRow(mock)
+        }
     }
 }

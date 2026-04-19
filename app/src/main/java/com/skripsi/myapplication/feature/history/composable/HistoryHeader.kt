@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skripsi.myapplication.R
-import com.skripsi.myapplication.core.theme.green
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 
 @Composable
 fun HistoryHeader(points: Int) {
@@ -31,13 +30,14 @@ fun HistoryHeader(points: Int) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
+            color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = green, shape = RoundedCornerShape(12.dp))
+                .background(color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(12.dp))
                 .padding(20.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -46,13 +46,13 @@ fun HistoryHeader(points: Int) {
                 Icon(
                     painter = painterResource(R.drawable.ic_point_earned),
                     contentDescription = "Points",
-                    tint = Color(0xFF0F4A24)
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Points Earned",
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = Color(0xFF0F4A24),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         fontWeight = FontWeight.SemiBold
                     )
                 )
@@ -61,7 +61,7 @@ fun HistoryHeader(points: Int) {
                 Text(
                     text = points.toString(),
                     style = MaterialTheme.typography.headlineLarge.copy(
-                        color = Color(0xFF0F4A24),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         fontWeight = FontWeight.Bold,
                         fontSize = 32.sp
                     )
@@ -70,7 +70,7 @@ fun HistoryHeader(points: Int) {
                 Text(
                     text = "Pts",
                     style = MaterialTheme.typography.bodyMedium.copy(
-                        color = Color(0xFF0F4A24),
+                        color = MaterialTheme.colorScheme.onPrimary,
                         fontWeight = FontWeight.Bold,
                     ),
                     modifier = Modifier.padding(bottom = 4.dp)
@@ -83,8 +83,9 @@ fun HistoryHeader(points: Int) {
 @Preview(showBackground = true)
 @Composable
 fun HistoryHeaderPreview() {
-    Box(modifier = Modifier.padding(16.dp)) {
-        HistoryHeader(725)
+    SmartTrashBinTheme {
+        Box(modifier = Modifier.padding(16.dp)) {
+            HistoryHeader(725)
+        }
     }
 }
-

@@ -10,16 +10,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.skripsi.myapplication.core.theme.TextPrimary
 import com.skripsi.myapplication.feature.history.composable.HistoryCategoryTabs
 import com.skripsi.myapplication.feature.history.composable.HistoryHeader
 import com.skripsi.myapplication.feature.history.composable.HistoryItemRow
+import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 
 @Composable
 fun HistoryScreen(
@@ -31,7 +30,7 @@ fun HistoryScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF9FAFB))
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 12.dp)
     ) {
         HistoryHeader(points = state.totalPoints)
@@ -59,7 +58,7 @@ fun HistoryScreen(
                             text = month,
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = TextPrimary,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontSize = 18.sp
                             ),
                             modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
@@ -78,7 +77,7 @@ fun HistoryScreen(
 @Preview(showBackground = true)
 @Composable
 fun HistoryScreenPreview() {
-    MaterialTheme {
+    SmartTrashBinTheme {
         HistoryScreen()
     }
 }
