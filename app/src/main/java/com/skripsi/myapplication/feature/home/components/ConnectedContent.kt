@@ -27,7 +27,7 @@ fun ConnectedContent(
             .fillMaxSize()
             .background(Color.White)
             .padding(horizontal = 24.dp),
-        contentPadding = PaddingValues(vertical = 24.dp)
+        contentPadding = PaddingValues(bottom = 12.dp),
     ) {
         item {
             Text(

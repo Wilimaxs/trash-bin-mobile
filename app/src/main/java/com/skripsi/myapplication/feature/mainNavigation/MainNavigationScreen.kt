@@ -31,6 +31,7 @@ fun MainNavigationScreen() {
     )
 
     Scaffold(
+        containerColor = Color.White,
         bottomBar = {
             NavigationBar(
                 containerColor = Color.White,
