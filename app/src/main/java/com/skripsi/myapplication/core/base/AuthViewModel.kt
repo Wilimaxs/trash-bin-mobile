@@ -9,6 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,6 +25,15 @@ class AuthViewModel @Inject constructor(
 
     init {
         checkAuthState()
+        observeSessionEvent()
+    }
+
+    private fun observeSessionEvent() {
+        viewModelScope.launch {
+            secureStorage.sessionExpiredEvent.collectLatest {
+                logout() // Panggil logout otomatis ketika menerima event expired
+            }
+        }
     }
 
     private fun checkAuthState() {
@@ -46,8 +56,9 @@ class AuthViewModel @Inject constructor(
     }
 
     // Dipanggil saat login berhasil
-    fun setAuthenticated(token: String, userJson: String? = null) {
+    fun setAuthenticated(token: String, refreshToken: String, userJson: String? = null) {
         secureStorage.saveToken(token)
+        secureStorage.saveRefreshToken(refreshToken)
         if (userJson != null) {
             viewModelScope.launch {
                 localStorage.saveUserData(userJson)
@@ -73,4 +84,3 @@ class AuthViewModel @Inject constructor(
         }
     }
 }
-
