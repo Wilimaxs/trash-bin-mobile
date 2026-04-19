@@ -32,7 +32,7 @@ fun HistoryScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFF9FAFB))
-            .padding(horizontal = 24.dp)
+            .padding(horizontal = 12.dp)
     ) {
         HistoryHeader(points = state.totalPoints)
 
