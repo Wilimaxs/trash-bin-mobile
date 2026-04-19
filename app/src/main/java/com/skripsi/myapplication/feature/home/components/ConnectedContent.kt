@@ -26,7 +26,7 @@ fun ConnectedContent(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 12.dp),
         contentPadding = PaddingValues(bottom = 12.dp),
         userScrollEnabled = isScrollEnabled,
@@ -34,9 +34,8 @@ fun ConnectedContent(
         item {
             Text(
                 text = "RVM Monitor",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(bottom = 24.dp).fillMaxWidth(),
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
@@ -47,7 +46,7 @@ fun ConnectedContent(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFFE8FDF0), RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(16.dp))
                     .padding(20.dp)
             ) {
                 Row(
@@ -58,34 +57,33 @@ fun ConnectedContent(
                     Column {
                         Text(
                             text = state.rvmName,
-                            fontSize = 18.sp,
+                            style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF102218)
+                            color = MaterialTheme.colorScheme.onSurface
                         )
                         Text(
                             text = "Connected on: ${state.connectedOn}",
-                            fontSize = 14.sp,
-                            color = Color(0xFF4CA771)
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
                     Box(
                         modifier = Modifier
-                            .background(Color.White, RoundedCornerShape(16.dp))
-                            .border(1.dp, Color(0xFF13EC6D), RoundedCornerShape(16.dp))
+                            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(16.dp))
+                            .border(1.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(16.dp))
                             .padding(horizontal = 12.dp, vertical = 6.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 modifier = Modifier
                                     .size(8.dp)
-                                    .background(Color(0xFF13EC6D), RoundedCornerShape(4.dp))
+                                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(4.dp))
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text(
                                 text = "CONNECTED",
-                                color = Color(0xFF13EC6D),
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.Bold
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.labelSmall
                             )
                         }
                     }
@@ -98,18 +96,17 @@ fun ConnectedContent(
             // Status bins placeholder
             Text(
                 text = "Status EcoBin",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.Black,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                StatusBinItem(title = "ORGANIK", percent = state.organicPercent, color = Color(0xFF13EC6D))
+                StatusBinItem(title = "ORGANIK", percent = state.organicPercent, color = MaterialTheme.colorScheme.primary)
                 StatusBinItem(title = "ANORGANIK", percent = state.anorganicPercent, color = Color(0xFFFFB020))
-                StatusBinItem(title = "B3", percent = state.b3Percent, color = Color(0xFFFF3B30))
+                StatusBinItem(title = "B3", percent = state.b3Percent, color = MaterialTheme.colorScheme.error)
             }
             Spacer(modifier = Modifier.height(24.dp))
         }
@@ -122,25 +119,24 @@ fun ConnectedContent(
             ) {
                 Text(
                     text = "Live Activity",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 Box(
                     modifier = Modifier
-                        .background(Color(0xFFE8FDF0), RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(8.dp))
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Box(
                             modifier = Modifier
                                 .size(6.dp)
-                                .background(Color(0xFF13EC6D), RoundedCornerShape(3.dp))
+                                .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(3.dp))
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "LIVE UPDATE",
-                            color = Color(0xFF13EC6D),
+                            color = MaterialTheme.colorScheme.primary,
                             fontSize = 10.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -153,8 +149,8 @@ fun ConnectedContent(
         items(4) { _ ->
             Card(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                border = BorderStroke(1.dp, Color(0xFFF3F4F6)),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
                 elevation = CardDefaults.cardElevation(0.dp)
             ) {
                 Row(
@@ -164,15 +160,15 @@ fun ConnectedContent(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         // icon circle placeholder
-                        Box(modifier = Modifier.size(40.dp).background(Color(0xFFE8FDF0), RoundedCornerShape(20.dp)))
+                        Box(modifier = Modifier.size(40.dp).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(20.dp)))
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
-                            Text(text = "Item Name (x1)", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.Black)
-                            Text(text = "Category • Just now", fontSize = 12.sp, color = Color.Gray)
+                            Text(text = "Item Name (x1)", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                            Text(text = "Category • Just now", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
-                    Box(modifier = Modifier.background(Color(0xFFE8FDF0), RoundedCornerShape(16.dp)).padding(horizontal = 8.dp, vertical = 4.dp)) {
-                        Text(text = "+1 Pts", color = Color(0xFF13EC6D), fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Box(modifier = Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(16.dp)).padding(horizontal = 8.dp, vertical = 4.dp)) {
+                        Text(text = "+1 Pts", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }
@@ -190,11 +186,11 @@ fun ConnectedContent(
         item {
             Button(
                 onClick = onStopClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFF2F2)),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.errorContainer),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.fillMaxWidth().height(56.dp)
             ) {
-                Text(text = "Stop Monitoring", color = Color(0xFFFF3B30), fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text(text = "Stop Monitoring", color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
             }
         }
     }
@@ -203,8 +199,8 @@ fun ConnectedContent(
 @Composable
 fun StatusBinItem(title: String, percent: Int, color: Color) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = BorderStroke(1.dp, Color(0xFFF3F4F6)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         modifier = Modifier.width(100.dp).aspectRatio(0.8f)
     ) {
         Column(
@@ -216,14 +212,14 @@ fun StatusBinItem(title: String, percent: Int, color: Color) {
                 CircularProgressIndicator(
                     progress = { percent / 100f },
                     color = color,
-                    trackColor = Color(0xFFF3F4F6),
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     modifier = Modifier.fillMaxSize(),
                     strokeWidth = 4.dp
                 )
-                Text(text = "$percent%", fontWeight = FontWeight.Bold)
+                Text(text = "$percent%", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
             }
             Spacer(modifier = Modifier.height(12.dp))
-            Text(text = title, fontSize = 10.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+            Text(text = title, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(4.dp))
             Box(modifier = Modifier.size(6.dp).background(color, RoundedCornerShape(3.dp)))
         }
@@ -234,21 +230,17 @@ fun StatusBinItem(title: String, percent: Int, color: Color) {
 fun StatCard(modifier: Modifier = Modifier, title: String, value: String, suffix: String) {
     Card(
         modifier = modifier,
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF8F9FA)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f)),
         elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = title, fontSize = 10.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
+            Text(text = title, fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.Bottom) {
-                Text(text = value, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.Black)
+                Text(text = value, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
                 Spacer(modifier = Modifier.width(4.dp))
-                Text(text = suffix, fontSize = 14.sp, color = Color.Gray, modifier = Modifier.padding(bottom = 2.dp))
+                Text(text = suffix, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = 4.dp))
             }
         }
     }
 }
-
-
-
-

@@ -7,12 +7,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.remember
@@ -24,7 +21,7 @@ fun ScanOverlay(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xE6102218)) // Dark overlay
+            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.9f))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
@@ -39,21 +36,20 @@ fun ScanOverlay(
             Icon(
                 painter = painterResource(id = android.R.drawable.ic_dialog_info), // Placeholder for QR icon
                 contentDescription = "QR Code",
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(80.dp)
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
                 text = "To start your recycling session,\nplease scan the QR code located on\nthe EcoBin machine.",
-                color = Color.White,
-                fontSize = 16.sp,
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
-                lineHeight = 24.sp
             )
             Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = onScanClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF13ec6d)),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,14 +58,13 @@ fun ScanOverlay(
                 Icon(
                     painter = painterResource(id = android.R.drawable.ic_menu_camera), // Placeholder
                     contentDescription = "Scan",
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Scan QR Code",
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
         }
