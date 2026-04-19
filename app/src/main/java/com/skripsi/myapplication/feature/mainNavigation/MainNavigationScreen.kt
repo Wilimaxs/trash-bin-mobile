@@ -1,12 +1,9 @@
 package com.skripsi.myapplication.feature.mainNavigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -20,6 +17,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.skripsi.myapplication.core.theme.green
 import com.skripsi.myapplication.feature.history.HistoryScreen
+import com.skripsi.myapplication.feature.home.HomeScreen
 import com.skripsi.myapplication.feature.profile.ProfileScreen
 
 @Composable
@@ -85,7 +83,7 @@ fun MainNavigationScreen() {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(BottomNavItem.Home.route) {
-                DummyScreen("Home Screen")
+                HomeScreen()
             }
             composable(BottomNavItem.History.route) {
                 HistoryScreen()
@@ -104,15 +102,6 @@ fun MainNavigationScreen() {
     }
 }
 
-@Composable
-private fun DummyScreen(title: String) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(text = title, style = MaterialTheme.typography.headlineMedium)
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
