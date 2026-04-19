@@ -10,6 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,11 +25,16 @@ import com.skripsi.myapplication.core.theme.SmartTrashBinTheme
 
 @Composable
 fun ProfileCard(profileData: ProfileData?) {
-    Surface(
-        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-        shape = RoundedCornerShape(24.dp),
-        shadowElevation = 2.dp,
-        modifier = Modifier.fillMaxWidth()
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(4.dp, RoundedCornerShape(24.dp))
+            .background(
+                brush = Brush.linearGradient(
+                    colors = listOf(Color(0xFF13EC6D), Color(0xFF0F4A24))
+                ),
+                shape = RoundedCornerShape(24.dp)
+            )
     ) {
         Column(
             modifier = Modifier.padding(24.dp)
@@ -41,7 +49,7 @@ fun ProfileCard(profileData: ProfileData?) {
                         modifier = Modifier
                             .size(72.dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.surfaceVariant),
+                            .background(Color.White.copy(alpha = 0.2f)),
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
@@ -59,7 +67,7 @@ fun ProfileCard(profileData: ProfileData?) {
                         text = profileData?.fullName ?: "-",
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface,
+                            color = Color.White,
                             fontSize = 22.sp
                         )
                     )
@@ -67,7 +75,7 @@ fun ProfileCard(profileData: ProfileData?) {
                     Text(
                         text = profileData?.memberSince ?: "Member since -",
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            color = Color.White.copy(alpha = 0.8f),
                             fontSize = 14.sp
                         )
                     )
@@ -87,7 +95,7 @@ fun ProfileCard(profileData: ProfileData?) {
                 ) {
                     Text(
                         text = "Total Points",
-                        style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.White.copy(alpha = 0.8f))
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.Bottom) {
@@ -95,13 +103,13 @@ fun ProfileCard(profileData: ProfileData?) {
                             text = "${profileData?.totalPoints ?: 0}",
                             style = MaterialTheme.typography.headlineSmall.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface
+                                color = Color.White
                             )
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "pts",
-                            style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
+                            style = MaterialTheme.typography.bodySmall.copy(color = Color.White.copy(alpha = 0.8f)),
                             modifier = Modifier.padding(bottom = 2.dp)
                         )
                     }
@@ -111,7 +119,7 @@ fun ProfileCard(profileData: ProfileData?) {
                     modifier = Modifier
                         .height(32.dp)
                         .width(1.dp)
-                        .background(MaterialTheme.colorScheme.outlineVariant)
+                        .background(Color.White.copy(alpha = 0.3f))
                 )
 
                 Column(
@@ -120,7 +128,7 @@ fun ProfileCard(profileData: ProfileData?) {
                 ) {
                     Text(
                         text = "Total Items",
-                        style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        style = MaterialTheme.typography.bodySmall.copy(color = Color.White.copy(alpha = 0.8f))
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Row(verticalAlignment = Alignment.Bottom) {
@@ -128,13 +136,13 @@ fun ProfileCard(profileData: ProfileData?) {
                             text = "${profileData?.totalItems ?: 0}",
                             style = MaterialTheme.typography.headlineSmall.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface
+                                color = Color.White
                             )
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = "items",
-                            style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
+                            style = MaterialTheme.typography.bodySmall.copy(color = Color.White.copy(alpha = 0.8f)),
                             modifier = Modifier.padding(bottom = 2.dp)
                         )
                     }
