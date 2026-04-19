@@ -17,11 +17,19 @@ abstract class BaseRepository {
                 val response = apiCall()
                 if (response.isSuccessful) {
                     val body = response.body()
-                    if (body != null && body.data != null) {
-                        NetworkResult.Success(body.data)
+                    if (body != null) {
+                        if (body.status) {
+                            @Suppress("UNCHECKED_CAST")
+                            NetworkResult.Success(body.data as T)
+                        } else {
+                            NetworkResult.Error(
+                                message = body.message.ifBlank { "An error occurred from server" },
+                                code = response.code()
+                            )
+                        }
                     } else {
                         NetworkResult.Error(
-                            message = ErrorMapper.getApiMessage(response),
+                            message = "Empty response body",
                             code = response.code()
                         )
                     }
