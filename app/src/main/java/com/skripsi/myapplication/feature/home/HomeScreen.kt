@@ -25,6 +25,7 @@ fun HomeScreen(
         } else {
             ConnectedContent(
                 state = uiState,
+                isScrollEnabled = false,
                 onStopClick = { }
             )
             ScanOverlay(

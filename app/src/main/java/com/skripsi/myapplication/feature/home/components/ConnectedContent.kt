@@ -20,6 +20,7 @@ import androidx.compose.foundation.BorderStroke
 @Composable
 fun ConnectedContent(
     state: HomeState,
+    isScrollEnabled: Boolean = true,
     onStopClick: () -> Unit
 ) {
     LazyColumn(
@@ -28,6 +29,7 @@ fun ConnectedContent(
             .background(Color.White)
             .padding(horizontal = 12.dp),
         contentPadding = PaddingValues(bottom = 12.dp),
+        userScrollEnabled = isScrollEnabled,
     ) {
         item {
             Text(

@@ -13,6 +13,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.runtime.remember
 
 @Composable
 fun ScanOverlay(
@@ -21,7 +24,12 @@ fun ScanOverlay(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xE6102218)), // Dark overlay
+            .background(Color(0xE6102218)) // Dark overlay
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = {}
+            ),
         contentAlignment = Alignment.Center
     ) {
         Column(
