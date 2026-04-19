@@ -23,7 +23,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://dev.api.example.com/\"")
+            buildConfigField("String", "BASE_URL", "\"https://notify.basehub.me/\"")
         }
         release {
             buildConfigField("String", "BASE_URL", "\"https://api.example.com/\"")
