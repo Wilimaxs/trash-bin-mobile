@@ -24,8 +24,8 @@ class LocalStorage @Inject constructor(
         preferences[KEY_HAS_SEEN_ONBOARDING] ?: false
     }
 
-    val userData: Flow<String?> = context.dataStore.data.map { preferences ->
-        preferences[KEY_USER_DATA]
+    val activeQrCode: Flow<String?> = context.dataStore.data.map { preferences ->
+        preferences[KEY_ACTIVE_QR]
     }
 
     suspend fun saveOnboardingState(hasSeen: Boolean) {
@@ -46,8 +46,21 @@ class LocalStorage @Inject constructor(
         }
     }
 
+    suspend fun saveActiveQrCode(qr: String) {
+        context.dataStore.edit { preferences ->
+            preferences[KEY_ACTIVE_QR] = qr
+        }
+    }
+
+    suspend fun clearActiveQrCode() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(KEY_ACTIVE_QR)
+        }
+    }
+
     companion object {
         private val KEY_HAS_SEEN_ONBOARDING = booleanPreferencesKey("has_seen_onboarding")
         private val KEY_USER_DATA = stringPreferencesKey("user_data")
+        private val KEY_ACTIVE_QR = stringPreferencesKey("active_qr_code")
     }
 }

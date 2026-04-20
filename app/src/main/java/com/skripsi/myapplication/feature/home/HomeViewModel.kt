@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
+import com.skripsi.myapplication.core.local.LocalStorage
 import com.skripsi.myapplication.core.network.NetworkResult
 import com.skripsi.myapplication.repository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val application: Application,
-    private val repository: HomeRepository
+    private val repository: HomeRepository,
+    private val localStorage: LocalStorage
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeState())
     val uiState: StateFlow<HomeState> = _uiState.asStateFlow()
@@ -30,6 +32,13 @@ class HomeViewModel @Inject constructor(
     private var streamJob: Job? = null
 
     init {
+        viewModelScope.launch {
+            localStorage.activeQrCode.collect { savedQr ->
+                if (savedQr != null) {
+                    _uiState.update { it.copy(qrCode = savedQr) }
+                }
+            }
+        }
         startStreaming()
     }
 
@@ -38,22 +47,38 @@ class HomeViewModel @Inject constructor(
         streamJob = viewModelScope.launch {
             repository.streamDashboard()
                 .catch { e ->
-                    // Handle error, maybe retry or show error message
-                    _uiState.update { it.copy(errorMessage = e.message) }
+                    // Handle error, retry or show error message
+                    _uiState.update {
+                        it.copy(
+                            isConnected = false,
+                            errorMessage = e.message ?: "Connection lost"
+                        )
+                    }
                 }
                 .collect { update ->
-                    _uiState.update { state ->
-                        state.copy(
-                            isConnected = update.isConnected,
-                            rvmName = update.binName ?: state.rvmName,
-                            organicPercent = update.capacityOrganic ?: state.organicPercent,
-                            anorganicPercent = update.capacityInorganic ?: state.anorganicPercent,
-                            b3Percent = update.capacityB3 ?: state.b3Percent,
-                            totalItems = update.totalItems ?: state.totalItems,
-                            totalPoints = update.totalPoints ?: state.totalPoints,
-                            liveActivities = update.liveActivity ?: state.liveActivities,
-                            errorMessage = update.message
-                        )
+                    if (!update.isConnected) {
+                        localStorage.clearActiveQrCode()
+                        _uiState.update { state ->
+                            state.copy(
+                                isConnected = false,
+                                qrCode = null,
+                                errorMessage = update.message
+                            )
+                        }
+                    } else {
+                        _uiState.update { state ->
+                            state.copy(
+                                isConnected = update.isConnected,
+                                rvmName = update.binName ?: state.rvmName,
+                                organicPercent = update.capacityOrganic ?: state.organicPercent,
+                                anorganicPercent = update.capacityInorganic ?: state.anorganicPercent,
+                                b3Percent = update.capacityB3 ?: state.b3Percent,
+                                totalItems = update.totalItems ?: state.totalItems,
+                                totalPoints = update.totalPoints ?: state.totalPoints,
+                                liveActivities = update.liveActivity ?: state.liveActivities,
+                                errorMessage = update.message
+                            )
+                        }
                     }
                 }
         }
@@ -78,6 +103,7 @@ class HomeViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
             when (val result = repository.connectSession(qrCode)) {
                 is NetworkResult.Success -> {
+                    localStorage.saveActiveQrCode(qrCode)
                     val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
                     _uiState.update {
                         it.copy(
@@ -101,6 +127,7 @@ class HomeViewModel @Inject constructor(
     fun disconnect() {
         val currentQr = _uiState.value.qrCode
         if (currentQr == null) {
+            streamJob?.cancel()
             _uiState.update { it.copy(isConnected = false) } // Just a fallback
             return
         }
@@ -108,6 +135,7 @@ class HomeViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
             when (val result = repository.disconnectSession(currentQr)) {
                 is NetworkResult.Success -> {
+                    localStorage.clearActiveQrCode()
                     _uiState.update {
                         it.copy(
                             isLoading = false,

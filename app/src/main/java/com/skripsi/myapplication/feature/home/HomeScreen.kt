@@ -24,7 +24,7 @@ fun HomeScreen(
     LaunchedEffect(uiState.errorMessage) {
         uiState.errorMessage?.let { errorMsg ->
             Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
-            viewModel.clearError() // <--- Di sini clearError digunakan!
+            viewModel.clearError()
         }
     }
 
