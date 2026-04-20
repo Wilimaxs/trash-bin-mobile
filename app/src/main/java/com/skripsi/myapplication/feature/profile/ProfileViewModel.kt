@@ -3,12 +3,15 @@ package com.skripsi.myapplication.feature.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skripsi.myapplication.core.network.NetworkResult
+import com.skripsi.myapplication.core.local.LocalStorage
 import com.skripsi.myapplication.repository.AuthRepository
+import com.skripsi.myapplication.repository.HomeRepository
 import com.skripsi.myapplication.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val homeRepository: HomeRepository,
+    private val localStorage: LocalStorage
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileState(isLoading = true))
@@ -85,6 +90,13 @@ class ProfileViewModel @Inject constructor(
     fun onLogoutClick(onLogoutSuccess: () -> Unit) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
+
+            // Check for active connection stream and disconnect if exists
+            val activeQrCode = localStorage.activeQrCode.firstOrNull()
+            if (!activeQrCode.isNullOrEmpty()) {
+                homeRepository.disconnectSession(activeQrCode)
+            }
+
             // 1. Hit API Logout
             authRepository.logout()
             // 2. Trigger success callback which will clear local config and navigate

@@ -54,7 +54,11 @@ class LocalStorage @Inject constructor(
 
     suspend fun clearAll() {
         context.dataStore.edit { preferences ->
+            val hasSeenOnboarding = preferences[KEY_HAS_SEEN_ONBOARDING]
             preferences.clear()
+            if (hasSeenOnboarding != null) {
+                preferences[KEY_HAS_SEEN_ONBOARDING] = hasSeenOnboarding
+            }
         }
     }
 
