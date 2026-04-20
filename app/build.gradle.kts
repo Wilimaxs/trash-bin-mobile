@@ -75,6 +75,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
+    implementation(libs.okhttp.sse)
     //----UI & Utilities----
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.timber)
