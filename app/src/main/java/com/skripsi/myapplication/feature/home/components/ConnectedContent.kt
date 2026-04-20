@@ -14,8 +14,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.skripsi.myapplication.feature.home.HomeState
-
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.res.painterResource
+import com.skripsi.myapplication.R
 
 @Composable
 fun ConnectedContent(
@@ -145,8 +148,14 @@ fun ConnectedContent(
             }
         }
 
-        // Dummy live activities
-        items(4) { _ ->
+        items(state.liveActivities) { activity ->
+            val (iconColor, bgColor, iconVector) = when (activity.compartmentType.lowercase()) {
+                "organik" -> Triple(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), R.drawable.ic_organic)
+                "anorganik" -> Triple(Color(0xFFFFB300), Color(0xFFFFB300).copy(alpha = 0.1f), R.drawable.ic_anorganic)
+                "b3" -> Triple(MaterialTheme.colorScheme.error, MaterialTheme.colorScheme.error.copy(alpha = 0.1f), R.drawable.ic_b3)
+                else -> Triple(Color.Gray, Color.Gray.copy(alpha = 0.1f), R.drawable.ic_organic)
+            }
+
             Card(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
@@ -159,16 +168,27 @@ fun ConnectedContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        // icon circle placeholder
-                        Box(modifier = Modifier.size(40.dp).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(20.dp)))
+                        Box(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .background(bgColor, CircleShape),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(id = iconVector),
+                                contentDescription = activity.compartmentType,
+                                tint = iconColor,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        }
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
-                            Text(text = "Item Name (x1)", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                            Text(text = "Category • Just now", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(text = activity.category, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                            Text(text = "${activity.compartmentType} • ${activity.time.take(10)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                     Box(modifier = Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(16.dp)).padding(horizontal = 8.dp, vertical = 4.dp)) {
-                        Text(text = "+1 Pts", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
+                        Text(text = "+${activity.pointsEarned} Pts", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }

@@ -10,6 +10,8 @@ import com.skripsi.myapplication.model.ProfileData
 import com.skripsi.myapplication.model.PointEarnedResponse
 import com.skripsi.myapplication.model.PaginatedResponse
 import com.skripsi.myapplication.model.HistoryItem
+import com.skripsi.myapplication.model.ConnectRequest
+import com.skripsi.myapplication.model.SessionData
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -38,4 +40,10 @@ interface ApiService {
         @Query("size") size: Int,
         @Query("type") type: String? = null
     ): Response<ApiResponse<PaginatedResponse<HistoryItem>>>
+
+    @POST("sessions/connect")
+    suspend fun connectSession(@Body request: ConnectRequest): Response<ApiResponse<SessionData>>
+
+    @POST("sessions/disconnect")
+    suspend fun disconnectSession(@Body request: ConnectRequest): Response<ApiResponse<Any?>>
 }

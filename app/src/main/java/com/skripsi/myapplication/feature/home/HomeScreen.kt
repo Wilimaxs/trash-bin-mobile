@@ -10,11 +10,23 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skripsi.myapplication.feature.home.components.ConnectedContent
 import com.skripsi.myapplication.feature.home.components.ScanOverlay
 
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
+import androidx.compose.runtime.LaunchedEffect
+
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(uiState.errorMessage) {
+        uiState.errorMessage?.let { errorMsg ->
+            Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show()
+            viewModel.clearError() // <--- Di sini clearError digunakan!
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (uiState.isConnected) {
@@ -29,7 +41,7 @@ fun HomeScreen(
                 onStopClick = { }
             )
             ScanOverlay(
-                onScanClick = { viewModel.connect() }
+                onScanClick = { viewModel.startScan() }
             )
         }
     }
