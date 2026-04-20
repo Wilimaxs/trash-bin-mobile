@@ -73,7 +73,7 @@ class AuthViewModel @Inject constructor(
     fun logout() {
         secureStorage.clearAuth()
         viewModelScope.launch {
-            localStorage.clearUserData()
+            localStorage.clearAll()
             _authState.value = AuthState.Unauthenticated
         }
     }

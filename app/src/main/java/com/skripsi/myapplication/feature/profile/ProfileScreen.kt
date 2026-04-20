@@ -124,7 +124,10 @@ fun ProfileScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .clickable {
-                            viewModel.onLogoutClick(onLogoutSuccess = onLogoutNavigate)
+                            viewModel.onLogoutClick(onLogoutSuccess = {
+                                CustomSnackBarManager.showSuccess("Sukses logout")
+                                onLogoutNavigate()
+                            })
                         }
                         .padding(8.dp)
                 ) {

@@ -61,4 +61,8 @@ class AuthRepository @Inject constructor(
 
         return result
     }
+
+    suspend fun logout(): NetworkResult<Any?> {
+        return safeApiCall { api.logout() }
+    }
 }

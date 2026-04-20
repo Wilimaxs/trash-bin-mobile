@@ -40,12 +40,6 @@ class LocalStorage @Inject constructor(
         }
     }
 
-    suspend fun clearUserData() {
-        context.dataStore.edit { preferences ->
-            preferences.remove(KEY_USER_DATA)
-        }
-    }
-
     suspend fun saveActiveQrCode(qr: String) {
         context.dataStore.edit { preferences ->
             preferences[KEY_ACTIVE_QR] = qr
@@ -55,6 +49,12 @@ class LocalStorage @Inject constructor(
     suspend fun clearActiveQrCode() {
         context.dataStore.edit { preferences ->
             preferences.remove(KEY_ACTIVE_QR)
+        }
+    }
+
+    suspend fun clearAll() {
+        context.dataStore.edit { preferences ->
+            preferences.clear()
         }
     }
 

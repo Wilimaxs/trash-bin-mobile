@@ -122,7 +122,11 @@ fun AppNavigation(
             }
 
             composable(Screen.Home.route) {
-                MainNavigationScreen()
+                MainNavigationScreen(
+                    onLogout = {
+                        authViewModel.logout()
+                    }
+                )
             }
         }
 

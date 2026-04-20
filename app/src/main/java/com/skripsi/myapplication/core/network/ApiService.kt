@@ -46,4 +46,7 @@ interface ApiService {
 
     @POST("sessions/disconnect")
     suspend fun disconnectSession(@Body request: ConnectRequest): Response<ApiResponse<Any?>>
+
+    @POST("auth/logout")
+    suspend fun logout(): Response<ApiResponse<Any?>>
 }

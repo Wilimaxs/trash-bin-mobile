@@ -21,7 +21,9 @@ import com.skripsi.myapplication.feature.home.HomeScreen
 import com.skripsi.myapplication.feature.profile.ProfileScreen
 
 @Composable
-fun MainNavigationScreen() {
+fun MainNavigationScreen(
+    onLogout: () -> Unit = {}
+) {
     val navController = rememberNavController()
 
     val items = listOf(
@@ -92,12 +94,7 @@ fun MainNavigationScreen() {
             }
             composable(BottomNavItem.Profile.route) {
                 ProfileScreen(
-                    onLogoutNavigate = {
-                        // TODO: Bersihkan auth / route ke layar login di sini
-                        navController.navigate("login_screen") {
-                            popUpTo(0) { inclusive = true }
-                        }
-                    }
+                    onLogoutNavigate = onLogout
                 )
             }
         }
