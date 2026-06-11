@@ -16,6 +16,7 @@ import com.skripsi.myapplication.core.base.AuthViewModel
 import com.skripsi.myapplication.feature.loading.LoadingScreen
 import com.skripsi.myapplication.feature.login.LoginScreen
 import com.skripsi.myapplication.feature.forgot.ForgotPasswordScreen
+import com.skripsi.myapplication.feature.forgot.reset.ResetScreen
 import com.skripsi.myapplication.feature.mainNavigation.MainNavigationScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
@@ -112,6 +113,14 @@ fun AppNavigation(
                 )
             }
 
+            composable (Screen.ResetPassword.route){
+                ResetScreen(
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
             composable(Screen.Registration.route) {
                 RegistrationScreen(
                     onNavigateBack = {
@@ -144,8 +153,6 @@ fun AppNavigation(
                 )
             }
         }
-
-        // Letakkan CustomTopSnackbarHost di layer paling atas
         CustomTopSnackBarHost()
     }
 }
