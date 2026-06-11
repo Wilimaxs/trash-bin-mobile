@@ -72,7 +72,6 @@ class LoginViewModel @Inject constructor(
                     is NetworkResult.Success -> {
                         _state.update { it.copy(isLoading = false, isEmailError = false, isPasswordError = false) }
                         CustomSnackBarManager.showSuccess("Login Successful")
-                        // Wait for AuthViewModel to update the global auth state first, then onSuccess will trigger navigation
                         onSuccess(result.data.accessToken, result.data.refreshToken)
                     }
                     is NetworkResult.Error -> {

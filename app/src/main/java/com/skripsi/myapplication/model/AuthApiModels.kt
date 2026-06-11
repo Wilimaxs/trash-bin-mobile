@@ -18,6 +18,14 @@ data class VerifyRequest(
     @SerializedName("otp_code") val otpCode: String
 )
 
+data class ForgotPasswordRequest(
+    @SerializedName("email") val email: String
+)
+
+data class ForgotPasswordResponse(
+    @SerializedName("access_token") val accessToken: String
+)
+
 data class LoginRequest(
     @SerializedName("email") val email: String,
     @SerializedName("password") val password: String

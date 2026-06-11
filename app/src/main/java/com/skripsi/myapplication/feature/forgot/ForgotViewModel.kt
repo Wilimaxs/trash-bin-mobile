@@ -3,8 +3,10 @@ package com.skripsi.myapplication.feature.forgot
 import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skripsi.myapplication.core.network.NetworkResult
+import com.skripsi.myapplication.model.ForgotPasswordRequest
+import com.skripsi.myapplication.repository.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ForgotViewModel @Inject constructor(
-    // private val authRepository: AuthRepository // if needed later
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ForgotState())
@@ -38,17 +40,25 @@ class ForgotViewModel @Inject constructor(
         }
     }
 
-    fun onSendResetCode(onSuccess: () -> Unit) {
+    fun onSendResetCode(onSuccess: (String) -> Unit) {
         if (!_state.value.isFormValid) return
 
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, errorMessage = null) }
             
-            // TODO: Replace with actual API call
-            delay(1000) // Mock network delay
-            
-            _state.update { it.copy(isLoading = false) }
-            onSuccess()
+            val request = ForgotPasswordRequest(email = _state.value.email)
+            when (val result = authRepository.forgotPassword(request)) {
+                is NetworkResult.Success -> {
+                    _state.update { it.copy(isLoading = false) }
+                    onSuccess("If your email is registered, you will receive an OTP code to reset your password.")
+                }
+                is NetworkResult.Error -> {
+                    _state.update { it.copy(isLoading = false, errorMessage = result.message) }
+                }
+                is NetworkResult.Loading -> {
+                    _state.update { it.copy(isLoading = true) }
+                }
+            }
         }
     }
 

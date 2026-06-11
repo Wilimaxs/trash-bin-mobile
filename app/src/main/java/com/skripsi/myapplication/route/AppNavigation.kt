@@ -105,6 +105,9 @@ fun AppNavigation(
                 ForgotPasswordScreen(
                     onNavigateBack = {
                         navController.popBackStack()
+                     },
+                    onNavigateToVerify = {
+                        navController.navigate(Screen.Verify.route)
                     }
                 )
             }

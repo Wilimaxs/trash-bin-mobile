@@ -6,6 +6,8 @@ import com.skripsi.myapplication.core.network.NetworkResult
 import com.skripsi.myapplication.model.RegisterRequest
 import com.skripsi.myapplication.model.RegisterResponse
 import com.skripsi.myapplication.model.VerifyRequest
+import com.skripsi.myapplication.model.ForgotPasswordRequest
+import com.skripsi.myapplication.model.ForgotPasswordResponse
 import com.skripsi.myapplication.model.LoginRequest
 import com.skripsi.myapplication.model.LoginResponse
 import javax.inject.Inject
@@ -41,6 +43,19 @@ class AuthRepository @Inject constructor(
 
         if (result is NetworkResult.Success) {
             secureStorage.clearTempVerifyToken()
+        }
+
+        return result
+    }
+
+    suspend fun forgotPassword(request: ForgotPasswordRequest): NetworkResult<ForgotPasswordResponse> {
+        val result = safeApiCall { api.forgotPassword(request) }
+
+        if (result is NetworkResult.Success) {
+            val accessToken = result.data.accessToken
+            if (accessToken.isNotEmpty()) {
+                secureStorage.saveTempVerifyToken(accessToken)
+            }
         }
 
         return result

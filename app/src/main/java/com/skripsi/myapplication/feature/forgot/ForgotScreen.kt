@@ -32,6 +32,7 @@ import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 @Composable
 fun ForgotPasswordScreen(
     onNavigateBack: () -> Unit = {},
+    onNavigateToVerify: () -> Unit = {},
     viewModel: ForgotViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -80,9 +81,9 @@ fun ForgotPasswordScreen(
                 onEmailChange = viewModel::onEmailChange,
                 onSendClick = {
                     viewModel.onSendResetCode(
-                        onSuccess = {
-                            CustomSnackBarManager.showSuccess("Reset code sent! (Mock)")
-                            onNavigateBack() // mock back or redirect
+                        onSuccess = { message ->
+                            CustomSnackBarManager.showSuccess(message)
+                            onNavigateToVerify()
                         }
                     )
                 }
