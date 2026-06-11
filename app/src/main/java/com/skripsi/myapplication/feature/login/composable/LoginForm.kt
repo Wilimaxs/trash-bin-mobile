@@ -29,6 +29,7 @@ fun LoginForm(
     emailChange: (String) -> Unit,
     state: LoginState,
     passwordChange: (String) -> Unit,
+    onNavigateToForgot: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     Column {
@@ -78,7 +79,7 @@ fun LoginForm(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.End)
-                .clickable { /* Handle Forgot Password */ }
+                .clickable { onNavigateToForgot() }
                 .padding(vertical = 4.dp)
         )
     }
@@ -91,7 +92,8 @@ fun LoginFormPreview() {
         LoginForm(
             emailChange = {},
             state = LoginState(),
-            passwordChange = {}
+            passwordChange = {},
+            onNavigateToForgot = {}
         )
     }
 }

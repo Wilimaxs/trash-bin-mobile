@@ -29,3 +29,6 @@ val TextHintDark = Color(0x61FFFFFF)
 val TextPrimary = Color(0xFFFFFFFF)
 val TextSecondary = Color(0xDE000000)
 val TextHint = Color(0x61FFFFFF)
+
+//custom
+val ForgotIconColor = Color(0xFF13EC6D)

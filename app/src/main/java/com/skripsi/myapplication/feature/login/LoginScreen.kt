@@ -22,6 +22,7 @@ import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 fun LoginScreen(
     onNavigateToSignUp: () -> Unit = {},
     onNavigateToMainRoute: (String, String) -> Unit = { _, _ -> },
+    onNavigateToForgot: () -> Unit = {},
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -49,7 +50,8 @@ fun LoginScreen(
             LoginForm(
                 emailChange = viewModel::onEmailChange,
                 state = state,
-                passwordChange = viewModel::onPasswordChange
+                passwordChange = viewModel::onPasswordChange,
+                onNavigateToForgot = onNavigateToForgot
             )
             Spacer(modifier = Modifier.height(24.dp))
             PrimaryButton(

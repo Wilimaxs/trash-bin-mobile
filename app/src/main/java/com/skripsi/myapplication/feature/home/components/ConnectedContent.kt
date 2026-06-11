@@ -149,7 +149,8 @@ fun ConnectedContent(
         }
 
         items(state.liveActivities) { activity ->
-            val (iconColor, bgColor, iconVector) = when (activity.compartmentType.lowercase()) {
+            val compartmentType = activity.compartmentType?.lowercase() ?: "organik"
+            val (iconColor, bgColor, iconVector) = when (compartmentType) {
                 "organik" -> Triple(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), R.drawable.ic_organic)
                 "anorganik" -> Triple(Color(0xFFFFB300), Color(0xFFFFB300).copy(alpha = 0.1f), R.drawable.ic_anorganic)
                 "b3" -> Triple(MaterialTheme.colorScheme.error, MaterialTheme.colorScheme.error.copy(alpha = 0.1f), R.drawable.ic_b3)
@@ -183,12 +184,12 @@ fun ConnectedContent(
                         }
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
-                            Text(text = activity.category, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
-                            Text(text = "${activity.compartmentType} • ${activity.time.take(10)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(text = activity.category ?: "not yet identified", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface)
+                            Text(text = "${activity.compartmentType ?: "organik"} • ${activity.time?.take(10) ?: "-"}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                     Box(modifier = Modifier.background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(16.dp)).padding(horizontal = 8.dp, vertical = 4.dp)) {
-                        Text(text = "+${activity.pointsEarned} Pts", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
+                        Text(text = "+${activity.pointsEarned ?: 0} Pts", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.bodyMedium)
                     }
                 }
             }

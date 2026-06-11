@@ -15,6 +15,7 @@ import com.skripsi.myapplication.core.base.AuthState
 import com.skripsi.myapplication.core.base.AuthViewModel
 import com.skripsi.myapplication.feature.loading.LoadingScreen
 import com.skripsi.myapplication.feature.login.LoginScreen
+import com.skripsi.myapplication.feature.forgot.ForgotPasswordScreen
 import com.skripsi.myapplication.feature.mainNavigation.MainNavigationScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
@@ -93,6 +94,17 @@ fun AppNavigation(
                     },
                     onNavigateToMainRoute = { token, refreshToken ->
                         authViewModel.setAuthenticated(token, refreshToken)
+                    },
+                    onNavigateToForgot = {
+                        navController.navigate(Screen.Forgot.route)
+                    }
+                )
+            }
+
+            composable(Screen.Forgot.route) {
+                ForgotPasswordScreen(
+                    onNavigateBack = {
+                        navController.popBackStack()
                     }
                 )
             }

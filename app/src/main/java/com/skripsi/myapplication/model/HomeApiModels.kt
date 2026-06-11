@@ -43,12 +43,12 @@ data class StreamUpdateData(
 
 data class LiveActivity(
     @SerializedName("category")
-    val category: String,
+    val category: String?,
     @SerializedName("compartment_type")
-    val compartmentType: String,
+    val compartmentType: String?,
     @SerializedName("points_earned")
-    val pointsEarned: Int,
+    val pointsEarned: Int?,
     @SerializedName("time")
-    val time: String
+    val time: String?
 )
 
