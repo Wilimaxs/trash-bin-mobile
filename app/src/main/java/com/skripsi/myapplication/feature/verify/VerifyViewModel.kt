@@ -80,6 +80,30 @@ class VerifyViewModel @Inject constructor(
         }
     }
 
+    fun onVerifyForgotClick(onSuccess: () -> Unit) {
+        val currentOtp = _state.value.otpCode
+
+        if (currentOtp.length == 6) {
+            _state.update { it.copy(isLoading = true, errorMessage = null) }
+
+            viewModelScope.launch {
+                when (val result = authRepository.verifyOtpForgot(currentOtp)) {
+                    is NetworkResult.Success -> {
+                        _state.update { it.copy(isLoading = false, isSuccess = true, isError = false) }
+                        CustomSnackBarManager.showSuccess("OTP verified. Please set your new password.")
+                        onSuccess()
+                    }
+                    is NetworkResult.Error -> {
+                        _state.update { it.copy(isLoading = false, isError = true, isSuccess = false, errorMessage = result.message) }
+                    }
+                    is NetworkResult.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
+                }
+            }
+        }
+    }
+
     fun onResendClick() {
         startTimer()
         _state.update { it.copy(otpCode = "", isError = false, isSuccess = false) }

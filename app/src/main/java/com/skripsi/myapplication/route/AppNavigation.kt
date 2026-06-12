@@ -108,7 +108,21 @@ fun AppNavigation(
                         navController.popBackStack()
                      },
                     onNavigateToVerify = {
-                        navController.navigate(Screen.Verify.route)
+                        navController.navigate(Screen.VerifyForgot.route)
+                    }
+                )
+            }
+
+            composable(Screen.VerifyForgot.route) {
+                VerifyScreen(
+                    isForgotFlow = true,
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToResetPassword = {
+                        navController.navigate(Screen.ResetPassword.route) {
+                            popUpTo(Screen.Forgot.route) { inclusive = true }
+                        }
                     }
                 )
             }

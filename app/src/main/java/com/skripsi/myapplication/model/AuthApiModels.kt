@@ -38,6 +38,10 @@ data class LoginResponse(
     @SerializedName("token_type") val tokenType: String
 )
 
+data class VerifyForgotResponse(
+    @SerializedName("reset_token") val resetToken: String
+)
+
 data class AuthUser(
     @SerializedName("id") val id: Int,
     @SerializedName("email") val email: String,

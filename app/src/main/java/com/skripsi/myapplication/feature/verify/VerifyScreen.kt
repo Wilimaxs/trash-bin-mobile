@@ -32,7 +32,9 @@ import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 fun VerifyScreen(
     viewModel: VerifyViewModel = hiltViewModel(),
     onNavigateBack: () -> Unit = {},
-    onNavigateToLogin: () -> Unit = {}
+    onNavigateToLogin: () -> Unit = {},
+    isForgotFlow: Boolean = false,
+    onNavigateToResetPassword: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
@@ -74,7 +76,11 @@ fun VerifyScreen(
                     text = "Verify",
                     onClick = {
                         focusManager.clearFocus()
-                        viewModel.onVerifyClick(onSuccess = onNavigateToLogin)
+                        if (isForgotFlow) {
+                            viewModel.onVerifyForgotClick(onSuccess = onNavigateToResetPassword)
+                        } else {
+                            viewModel.onVerifyClick(onSuccess = onNavigateToLogin)
+                        }
                     },
                     enabled = state.isOtpComplete,
                     iconResId = null

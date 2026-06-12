@@ -10,6 +10,7 @@ import com.skripsi.myapplication.model.ForgotPasswordRequest
 import com.skripsi.myapplication.model.ForgotPasswordResponse
 import com.skripsi.myapplication.model.LoginRequest
 import com.skripsi.myapplication.model.LoginResponse
+import com.skripsi.myapplication.model.VerifyForgotResponse
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(
@@ -43,6 +44,25 @@ class AuthRepository @Inject constructor(
 
         if (result is NetworkResult.Success) {
             secureStorage.clearTempVerifyToken()
+        }
+
+        return result
+    }
+
+    suspend fun verifyOtpForgot(otpCode: String): NetworkResult<VerifyForgotResponse> {
+        val accessToken = secureStorage.getTempVerifyToken()
+            ?: return NetworkResult.Error("Access token not found. Please try again.")
+
+        val request = VerifyRequest(
+            accessToken = accessToken,
+            otpCode = otpCode
+        )
+
+        val result = safeApiCall { api.verifyForgotOtp(request) }
+
+        if (result is NetworkResult.Success) {
+            secureStorage.clearTempVerifyToken()
+            secureStorage.saveTempResetToken(result.data.resetToken)
         }
 
         return result
