@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skripsi.myapplication.core.network.NetworkResult
 import com.skripsi.myapplication.repository.AuthRepository
+import com.skripsi.myapplication.utils.validation.ConfirmPasswordValidator
+import com.skripsi.myapplication.utils.validation.PasswordValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,10 +51,11 @@ class ResetViewModel @Inject constructor(
     fun onResetClick(onSuccess: () -> Unit) {
         val currentState = _state.value
 
-        val newPasswordError = if (currentState.newPassword.length < 8)
-            "Password must be at least 8 characters" else null
-        val confirmPasswordError = if (currentState.newPassword != currentState.confirmPassword)
-            "Passwords do not match" else null
+        val newPasswordError = PasswordValidator.validate(currentState.newPassword)
+        val confirmPasswordError = ConfirmPasswordValidator.validate(
+            password = currentState.newPassword,
+            confirmPassword = currentState.confirmPassword
+        )
 
         _state.update {
             it.copy(
