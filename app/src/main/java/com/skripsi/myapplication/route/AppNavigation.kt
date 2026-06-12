@@ -30,47 +30,49 @@ fun AppNavigation(
     val navController = rememberNavController()
     val authState by authViewModel.authState.collectAsState()
 
-    /**
-     *
-     * Default Route, Based from [AuthState] and [AuthViewModel]
-     *
-     */
     LaunchedEffect(authState) {
+        val currentRoute = navController.currentBackStackEntry?.destination?.route
+        
         when (authState) {
             is AuthState.Loading -> {
-                // Biarkan di loading, NavHost default bisa diatur ke sini
-                navController.navigate(Screen.Loading.route) {
-                    popUpTo(0) { inclusive = true }
+                if (currentRoute != Screen.Loading.route) {
+                    navController.navigate(Screen.Loading.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             }
             is AuthState.Onboarding -> {
-                navController.navigate(Screen.Onboarding.route) {
-                    popUpTo(0) { inclusive = true }
+                if (currentRoute != Screen.Onboarding.route) {
+                    navController.navigate(Screen.Onboarding.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             }
             is AuthState.Unauthenticated -> {
-                navController.navigate(Screen.Login.route) {
-                    popUpTo(0) { inclusive = true }
+                val unauthenticatedRoutes = listOf(
+                    Screen.Login.route,
+                    Screen.Registration.route,
+                    Screen.Verify.route,
+                    Screen.Forgot.route,
+                    Screen.VerifyForgot.route,
+                    Screen.ResetPassword.route
+                )
+                if (currentRoute !in unauthenticatedRoutes) {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             }
             is AuthState.Authenticated -> {
-                navController.navigate(Screen.Home.route) {
-                    popUpTo(0) { inclusive = true }
+                if (currentRoute != Screen.Home.route) {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(0) { inclusive = true }
+                    }
                 }
             }
         }
     }
 
-    /**
-     *
-     * Navigation Graph - Definition of all routes/destinations in the application
-     * 
-     * Uses [Screen] as route definition and automatically navigates
-     * based on [AuthState] changes from [AuthViewModel]
-     * 
-     * @see LaunchedEffect for automatic navigation logic
-     *
-     */
     Box(modifier = Modifier.fillMaxSize()) {
         NavHost(
             navController = navController,
