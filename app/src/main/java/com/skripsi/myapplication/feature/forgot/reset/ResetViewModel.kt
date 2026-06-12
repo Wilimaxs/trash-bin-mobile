@@ -1,12 +1,21 @@
 package com.skripsi.myapplication.feature.forgot.reset
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.skripsi.myapplication.core.network.NetworkResult
+import com.skripsi.myapplication.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ResetViewModel : ViewModel() {
+@HiltViewModel
+class ResetViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val _state = MutableStateFlow(ResetState())
     val state: StateFlow<ResetState> = _state.asStateFlow()
@@ -37,7 +46,7 @@ class ResetViewModel : ViewModel() {
         }
     }
 
-    fun onResetClick() {
+    fun onResetClick(onSuccess: () -> Unit) {
         val currentState = _state.value
 
         val newPasswordError = if (currentState.newPassword.length < 8)
@@ -55,7 +64,25 @@ class ResetViewModel : ViewModel() {
         }
 
         if (newPasswordError == null && confirmPasswordError == null) {
-            // TODO: trigger reset password logic
+            _state.update { it.copy(isLoading = true, errorMessage = null) }
+
+            viewModelScope.launch {
+                when (val result = authRepository.resetPassword(
+                    newPassword = currentState.newPassword,
+                    passwordConfirmation = currentState.confirmPassword
+                )) {
+                    is NetworkResult.Success -> {
+                        _state.update { it.copy(isLoading = false) }
+                        onSuccess()
+                    }
+                    is NetworkResult.Error -> {
+                        _state.update { it.copy(isLoading = false, errorMessage = result.message) }
+                    }
+                    is NetworkResult.Loading -> {
+                        _state.update { it.copy(isLoading = true) }
+                    }
+                }
+            }
         }
     }
 

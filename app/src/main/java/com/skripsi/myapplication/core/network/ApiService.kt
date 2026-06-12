@@ -13,6 +13,7 @@ import com.skripsi.myapplication.model.PointEarnedResponse
 import com.skripsi.myapplication.model.PaginatedResponse
 import com.skripsi.myapplication.model.HistoryItem
 import com.skripsi.myapplication.model.ConnectRequest
+import com.skripsi.myapplication.model.ResetPasswordRequest
 import com.skripsi.myapplication.model.SessionData
 import com.skripsi.myapplication.model.VerifyForgotResponse
 import retrofit2.Response
@@ -33,6 +34,9 @@ interface ApiService {
 
     @POST("auth/verify")
     suspend fun verifyForgotOtp(@Body request: VerifyRequest): Response<ApiResponse<VerifyForgotResponse>>
+
+    @POST("auth/reset-password")
+    suspend fun resetPassword(@Body request: ResetPasswordRequest): Response<ApiResponse<Any?>>
 
     @POST("auth/forgot-password")
     suspend fun forgotPassword(@Body request: ForgotPasswordRequest): Response<ApiResponse<ForgotPasswordResponse>>

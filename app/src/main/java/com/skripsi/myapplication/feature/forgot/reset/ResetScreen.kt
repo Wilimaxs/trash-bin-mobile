@@ -6,26 +6,34 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.skripsi.myapplication.R
 import com.skripsi.myapplication.feature.forgot.reset.composable.ResetPasswordForm
+import com.skripsi.myapplication.utils.composables.LoadingOverlay
+import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResetScreen(
     onBackClick: () -> Unit,
-    viewModel: ResetViewModel = viewModel()
-
+    onNavigateToLogin: () -> Unit = {},
+    viewModel: ResetViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
-    Scaffold(
+    LaunchedEffect(state.errorMessage) {
+        state.errorMessage?.let { msg ->
+            CustomSnackBarManager.showError(msg)
+        }
+    }
 
+    Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background),
@@ -69,8 +77,16 @@ fun ResetScreen(
                 state = state,
                 onNewPasswordChange = viewModel::onNewPasswordChange,
                 onConfirmPasswordChange = viewModel::onConfirmPasswordChange,
-                onResetClick = viewModel::onResetClick
+                onResetClick = {
+                    viewModel.onResetClick(
+                        onSuccess = {
+                            CustomSnackBarManager.showSuccess("Password has been reset successfully. You can now login.")
+                            onNavigateToLogin()
+                        }
+                    )
+                }
             )
         }
+        LoadingOverlay(isLoading = state.isLoading)
     }
 }

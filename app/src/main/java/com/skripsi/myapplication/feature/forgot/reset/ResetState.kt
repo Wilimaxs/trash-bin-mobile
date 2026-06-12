@@ -7,5 +7,7 @@ data class ResetState(
     val newPasswordErrorMessage: String? = null,
     val isConfirmPasswordError: Boolean = false,
     val confirmPasswordErrorMessage: String? = null,
-    val isFormValid: Boolean = false
+    val isFormValid: Boolean = false,
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
 )

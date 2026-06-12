@@ -10,6 +10,7 @@ import com.skripsi.myapplication.model.ForgotPasswordRequest
 import com.skripsi.myapplication.model.ForgotPasswordResponse
 import com.skripsi.myapplication.model.LoginRequest
 import com.skripsi.myapplication.model.LoginResponse
+import com.skripsi.myapplication.model.ResetPasswordRequest
 import com.skripsi.myapplication.model.VerifyForgotResponse
 import javax.inject.Inject
 
@@ -76,6 +77,25 @@ class AuthRepository @Inject constructor(
             if (accessToken.isNotEmpty()) {
                 secureStorage.saveTempVerifyToken(accessToken)
             }
+        }
+
+        return result
+    }
+
+    suspend fun resetPassword(newPassword: String, passwordConfirmation: String): NetworkResult<Any?> {
+        val resetToken = secureStorage.getTempResetToken()
+            ?: return NetworkResult.Error("Reset token not found. Please try again.")
+
+        val request = ResetPasswordRequest(
+            resetToken = resetToken,
+            newPassword = newPassword,
+            passwordConfirmation = passwordConfirmation
+        )
+
+        val result = safeApiCall { api.resetPassword(request) }
+
+        if (result is NetworkResult.Success) {
+            secureStorage.clearTempResetToken()
         }
 
         return result

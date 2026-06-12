@@ -42,6 +42,12 @@ data class VerifyForgotResponse(
     @SerializedName("reset_token") val resetToken: String
 )
 
+data class ResetPasswordRequest(
+    @SerializedName("reset_token") val resetToken: String,
+    @SerializedName("new_password") val newPassword: String,
+    @SerializedName("password_confirmation") val passwordConfirmation: String
+)
+
 data class AuthUser(
     @SerializedName("id") val id: Int,
     @SerializedName("email") val email: String,
