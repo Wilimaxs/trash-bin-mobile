@@ -31,7 +31,8 @@ import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 @Composable
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
-    onLogoutNavigate: () -> Unit = {}
+    onLogoutNavigate: () -> Unit = {},
+    onNavigateToPrivacyPolicy: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -108,7 +109,7 @@ fun ProfileScreen(
                 ProfileMenuItem(
                     icon = R.drawable.ic_privacy,
                     title = "Privacy Policy",
-                    onClick = { /* TODO */ }
+                    onClick = onNavigateToPrivacyPolicy
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 ProfileMenuItem(
@@ -125,7 +126,7 @@ fun ProfileScreen(
                     modifier = Modifier
                         .clickable {
                             viewModel.onLogoutClick(onLogoutSuccess = {
-                                CustomSnackBarManager.showSuccess("Sukses logout")
+                                CustomSnackBarManager.showSuccess("Success logout")
                                 onLogoutNavigate()
                             })
                         }
@@ -176,6 +177,10 @@ fun ProfileScreen(
 @Composable
 fun ProfileScreenPreview() {
     SmartTrashBinTheme {
-        ProfileScreen()
+        ProfileScreen(
+            viewModel = hiltViewModel(),
+            onLogoutNavigate = {},
+            onNavigateToPrivacyPolicy = {}
+        )
     }
 }

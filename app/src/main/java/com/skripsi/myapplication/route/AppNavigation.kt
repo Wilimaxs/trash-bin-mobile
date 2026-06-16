@@ -19,6 +19,7 @@ import com.skripsi.myapplication.feature.forgot.ForgotPasswordScreen
 import com.skripsi.myapplication.feature.forgot.reset.ResetScreen
 import com.skripsi.myapplication.feature.mainNavigation.MainNavigationScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
+import com.skripsi.myapplication.feature.profile.privacy.PrivacyScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
 import com.skripsi.myapplication.feature.verify.VerifyScreen
 import com.skripsi.myapplication.utils.snackbar.CustomTopSnackBarHost
@@ -170,9 +171,19 @@ fun AppNavigation(
                 MainNavigationScreen(
                     onLogout = {
                         authViewModel.logout()
+                    },
+                    onNavigateToPrivacyPolicy = {
+                        navController.navigate(Screen.PrivacyPolicy.route)
                     }
                 )
             }
+
+            composable(Screen.PrivacyPolicy.route) {
+                PrivacyScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+
         }
         CustomTopSnackBarHost()
     }
