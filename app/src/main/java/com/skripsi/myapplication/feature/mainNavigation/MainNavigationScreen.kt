@@ -25,6 +25,7 @@ fun MainNavigationScreen(
     onLogout: () -> Unit = {},
     onNavigateToPrivacyPolicy: () -> Unit = {},
     onNavigateToHelpSupport: () -> Unit = {},
+    onNavigateToEditProfile: () -> Unit = {}
 ) {
     val navController = rememberNavController()
 
@@ -99,6 +100,7 @@ fun MainNavigationScreen(
                     onLogoutNavigate = onLogout,
                     onNavigateToPrivacyPolicy = onNavigateToPrivacyPolicy,
                     onNavigateToHelpSupport = onNavigateToHelpSupport,
+                    onNavigateToEditProfile = onNavigateToEditProfile
                 )
             }
         }

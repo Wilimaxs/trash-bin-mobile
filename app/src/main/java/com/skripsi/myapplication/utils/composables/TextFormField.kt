@@ -28,6 +28,7 @@ fun TextFormField(
     isPassword: Boolean = false,
     isError: Boolean = false,
     errorMessage: String? = null,
+    enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     trailingIcon: @Composable (() -> Unit)? = null
@@ -35,52 +36,75 @@ fun TextFormField(
     var passwordVisible by remember { mutableStateOf(false) }
     val isFilled = value.isNotEmpty()
 
-    val containerColor = if (isFilled) MaterialTheme.colorScheme.surface else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+    val containerColor = if (isFilled) {
+        MaterialTheme.colorScheme.surface
+    } else {
+        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+    }
 
     Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = buildAnnotatedString {
-                append(label)
-                if (isRequired) {
-                    withStyle(style = SpanStyle(color = Color.Red)) {
-                        append(" *")
+        if (label.isNotEmpty()) {
+            Text(
+                text = buildAnnotatedString {
+                    append(label)
+                    if (isRequired) {
+                        withStyle(style = SpanStyle(color = Color.Red)) {
+                            append(" *")
+                        }
                     }
-                }
-            },
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
+                },
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (enabled) {
+                    MaterialTheme.colorScheme.onSurface
+                } else {
+                    MaterialTheme.colorScheme.onSurfaceVariant
+                },
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        }
 
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
+            enabled = enabled,
             placeholder = {
-                Text(text = hint, color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    text = hint,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             },
             isError = isError,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             singleLine = true,
-            visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+            visualTransformation = if (isPassword && !passwordVisible) {
+                PasswordVisualTransformation()
+            } else {
+                VisualTransformation.None
+            },
             shape = RoundedCornerShape(size = 12.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.surface,
                 unfocusedContainerColor = containerColor,
-                disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+                disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
                 errorContainerColor = containerColor,
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
-                errorBorderColor = MaterialTheme.colorScheme.error
+                disabledBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.25f),
+                errorBorderColor = MaterialTheme.colorScheme.error,
+                disabledTextColor = MaterialTheme.colorScheme.onSurfaceVariant
             ),
             trailingIcon = {
                 if (isPassword) {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(
                             painter = painterResource(
-                                id = if (passwordVisible) R.drawable.ic_visibility else R.drawable.ic_visibility_off
+                                id = if (passwordVisible) R.drawable.ic_visibility
+                                else R.drawable.ic_visibility_off
                             ),
-                            contentDescription = if (passwordVisible) "Hide password" else "Show password",
+                            contentDescription = if (passwordVisible) "Hide password"
+                            else "Show password",
                             tint = Color.Gray
                         )
                     }

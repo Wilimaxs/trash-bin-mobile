@@ -34,6 +34,7 @@ fun ProfileScreen(
     onLogoutNavigate: () -> Unit = {},
     onNavigateToPrivacyPolicy: () -> Unit,
     onNavigateToHelpSupport: () -> Unit,
+    onNavigateToEditProfile: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -104,7 +105,7 @@ fun ProfileScreen(
                 ProfileMenuItem(
                     icon = R.drawable.ic_edit,
                     title = "Edit Profile",
-                    onClick = { /* TODO */ }
+                    onClick = onNavigateToEditProfile
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 ProfileMenuItem(
@@ -182,7 +183,8 @@ fun ProfileScreenPreview() {
             viewModel = hiltViewModel(),
             onLogoutNavigate = {},
             onNavigateToPrivacyPolicy = {},
-            onNavigateToHelpSupport = {}
+            onNavigateToHelpSupport = {},
+            onNavigateToEditProfile = {}
         )
     }
 }

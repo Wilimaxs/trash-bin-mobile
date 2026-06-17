@@ -12,4 +12,5 @@ sealed class Screen(val route: String) {
     object ResetPassword : Screen("reset_password_screen")
     object PrivacyPolicy : Screen("privacy_policy")
     object HelpSupport : Screen("help_support")
+    object EditProfile  : Screen("edit_profile")
 }

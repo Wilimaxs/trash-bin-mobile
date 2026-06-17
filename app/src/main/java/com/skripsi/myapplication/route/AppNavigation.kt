@@ -21,6 +21,7 @@ import com.skripsi.myapplication.feature.mainNavigation.MainNavigationScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
 import com.skripsi.myapplication.feature.profile.help.HelpSupportScreen
 import com.skripsi.myapplication.feature.profile.privacy.PrivacyScreen
+import com.skripsi.myapplication.feature.profile.update.EditProfileScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
 import com.skripsi.myapplication.feature.verify.VerifyScreen
 import com.skripsi.myapplication.utils.snackbar.CustomTopSnackBarHost
@@ -182,6 +183,15 @@ fun AppNavigation(
                     onNavigateToHelpSupport = {
                         navController.navigate(Screen.HelpSupport.route)
                     },
+                    onNavigateToEditProfile = {
+                        navController.navigate(Screen.EditProfile.route)
+                    }
+                )
+            }
+
+            composable(Screen.EditProfile.route) {
+                EditProfileScreen(
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
 
