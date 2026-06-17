@@ -19,6 +19,7 @@ import com.skripsi.myapplication.feature.forgot.ForgotPasswordScreen
 import com.skripsi.myapplication.feature.forgot.reset.ResetScreen
 import com.skripsi.myapplication.feature.mainNavigation.MainNavigationScreen
 import com.skripsi.myapplication.feature.onboarding.OnBoardingScreen
+import com.skripsi.myapplication.feature.profile.help.HelpSupportScreen
 import com.skripsi.myapplication.feature.profile.privacy.PrivacyScreen
 import com.skripsi.myapplication.feature.registration.RegistrationScreen
 import com.skripsi.myapplication.feature.verify.VerifyScreen
@@ -33,7 +34,7 @@ fun AppNavigation(
 
     LaunchedEffect(authState) {
         val currentRoute = navController.currentBackStackEntry?.destination?.route
-        
+
         when (authState) {
             is AuthState.Loading -> {
                 if (currentRoute != Screen.Loading.route) {
@@ -42,6 +43,7 @@ fun AppNavigation(
                     }
                 }
             }
+
             is AuthState.Onboarding -> {
                 if (currentRoute != Screen.Onboarding.route) {
                     navController.navigate(Screen.Onboarding.route) {
@@ -49,6 +51,7 @@ fun AppNavigation(
                     }
                 }
             }
+
             is AuthState.Unauthenticated -> {
                 val unauthenticatedRoutes = listOf(
                     Screen.Login.route,
@@ -64,6 +67,7 @@ fun AppNavigation(
                     }
                 }
             }
+
             is AuthState.Authenticated -> {
                 if (currentRoute != Screen.Home.route) {
                     navController.navigate(Screen.Home.route) {
@@ -109,7 +113,7 @@ fun AppNavigation(
                 ForgotPasswordScreen(
                     onNavigateBack = {
                         navController.popBackStack()
-                     },
+                    },
                     onNavigateToVerify = {
                         navController.navigate(Screen.VerifyForgot.route)
                     }
@@ -130,7 +134,7 @@ fun AppNavigation(
                 )
             }
 
-            composable (Screen.ResetPassword.route){
+            composable(Screen.ResetPassword.route) {
                 ResetScreen(
                     onBackClick = {
                         navController.popBackStack()
@@ -174,7 +178,16 @@ fun AppNavigation(
                     },
                     onNavigateToPrivacyPolicy = {
                         navController.navigate(Screen.PrivacyPolicy.route)
-                    }
+                    },
+                    onNavigateToHelpSupport = {
+                        navController.navigate(Screen.HelpSupport.route)
+                    },
+                )
+            }
+
+            composable(Screen.HelpSupport.route) {
+                HelpSupportScreen(
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
 

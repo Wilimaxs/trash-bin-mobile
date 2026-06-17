@@ -23,7 +23,8 @@ import com.skripsi.myapplication.feature.profile.ProfileScreen
 @Composable
 fun MainNavigationScreen(
     onLogout: () -> Unit = {},
-    onNavigateToPrivacyPolicy: () -> Unit = {}
+    onNavigateToPrivacyPolicy: () -> Unit = {},
+    onNavigateToHelpSupport: () -> Unit = {},
 ) {
     val navController = rememberNavController()
 
@@ -96,7 +97,8 @@ fun MainNavigationScreen(
             composable(BottomNavItem.Profile.route) {
                 ProfileScreen(
                     onLogoutNavigate = onLogout,
-                    onNavigateToPrivacyPolicy = onNavigateToPrivacyPolicy
+                    onNavigateToPrivacyPolicy = onNavigateToPrivacyPolicy,
+                    onNavigateToHelpSupport = onNavigateToHelpSupport,
                 )
             }
         }

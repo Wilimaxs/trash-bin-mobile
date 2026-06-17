@@ -32,7 +32,8 @@ import com.skripsi.myapplication.utils.snackbar.CustomSnackBarManager
 fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     onLogoutNavigate: () -> Unit = {},
-    onNavigateToPrivacyPolicy: () -> Unit
+    onNavigateToPrivacyPolicy: () -> Unit,
+    onNavigateToHelpSupport: () -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -115,7 +116,7 @@ fun ProfileScreen(
                 ProfileMenuItem(
                     icon = R.drawable.ic_help,
                     title = "Help & Support",
-                    onClick = { /* TODO */ }
+                    onClick = onNavigateToHelpSupport
                 )
 
                 Spacer(modifier = Modifier.height(48.dp))
@@ -180,7 +181,8 @@ fun ProfileScreenPreview() {
         ProfileScreen(
             viewModel = hiltViewModel(),
             onLogoutNavigate = {},
-            onNavigateToPrivacyPolicy = {}
+            onNavigateToPrivacyPolicy = {},
+            onNavigateToHelpSupport = {}
         )
     }
 }
