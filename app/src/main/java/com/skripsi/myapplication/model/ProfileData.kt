@@ -11,3 +11,10 @@ data class ProfileData(
     @SerializedName("total_items") val totalItems: Int
 )
 
+data class UpdateProfileResponse(
+    @SerializedName("id") val id: Int,
+    @SerializedName("full_name") val fullName: String,
+    @SerializedName("email") val email: String,
+    @SerializedName("avatar_url") val avatarUrl: String?
+)
+

@@ -7,6 +7,7 @@ import com.skripsi.myapplication.core.local.LocalStorage
 import com.skripsi.myapplication.repository.AuthRepository
 import com.skripsi.myapplication.repository.HomeRepository
 import com.skripsi.myapplication.repository.UserRepository
+import com.skripsi.myapplication.utils.extensions.toFullImageUrl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +41,9 @@ class ProfileViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            profileData = result.data
+                            profileData = result.data.copy(
+                                avatarUrl = result.data.avatarUrl.toFullImageUrl()
+                            )
                         )
                     }
                 }
@@ -68,7 +71,9 @@ class ProfileViewModel @Inject constructor(
                     _state.update {
                         it.copy(
                             isRefreshing = false,
-                            profileData = result.data
+                            profileData = result.data.copy(
+                                avatarUrl = result.data.avatarUrl.toFullImageUrl()
+                            )
                         )
                     }
                 }

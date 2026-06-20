@@ -25,6 +25,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -55,16 +57,27 @@ fun EditProfileScreen(
 ) {
     val state by viewModel.state.collectAsState()
 
+    LaunchedEffect(state.isSuccess) {
+        if (state.isSuccess) onNavigateBack()
+    }
+
     val photoPicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         uri?.let { viewModel.onAvatarSelected(it) }
     }
 
+    fun launchPicker() {
+        photoPicker.launch(
+            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+        )
+    }
+
     Scaffold(
         topBar = {
             IconButton(
                 onClick = onNavigateBack,
+                enabled = !state.isLoading,
                 modifier = Modifier
                     .statusBarsPadding()
                     .padding(start = 4.dp)
@@ -85,20 +98,30 @@ fun EditProfileScreen(
             ) {
                 Button(
                     onClick = viewModel::onSaveChanges,
+                    enabled = !state.isLoading,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
                     shape = RoundedCornerShape(28.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                     )
                 ) {
-                    Text(
-                        text = "Save Changes",
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                    if (state.isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(22.dp),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            strokeWidth = 2.5.dp
+                        )
+                    } else {
+                        Text(
+                            text = "Save Changes",
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    }
                 }
             }
         },
@@ -130,29 +153,35 @@ fun EditProfileScreen(
                             color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
                             shape = CircleShape
                         )
-                        .clickable {
-                            photoPicker.launch(
-                                PickVisualMediaRequest(
-                                    ActivityResultContracts.PickVisualMedia.ImageOnly
-                                )
-                            )
-                        },
+                        .clickable(enabled = !state.isLoading) { launchPicker() },
                     contentAlignment = Alignment.Center
                 ) {
-                    if (state.avatarUri != null) {
-                        AsyncImage(
-                            model = state.avatarUri,
-                            contentDescription = "Profile photo",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
-                    } else {
-                        Icon(
-                            painter = painterResource(R.drawable.empty_person),
-                            contentDescription = null,
-                            modifier = Modifier.size(52.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                    // Prioritas: URI lokal (baru dipilih) → URL dari server → placeholder
+                    when {
+                        state.avatarUri != null -> {
+                            AsyncImage(
+                                model = state.avatarUri,
+                                contentDescription = "Profile photo",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                        state.currentAvatarUrl != null -> {
+                            AsyncImage(
+                                model = state.currentAvatarUrl,
+                                contentDescription = "Profile photo",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
+                        else -> {
+                            Icon(
+                                painter = painterResource(R.drawable.empty_person),
+                                contentDescription = null,
+                                modifier = Modifier.size(52.dp),
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 }
 
@@ -162,13 +191,7 @@ fun EditProfileScreen(
                         .size(30.dp)
                         .clip(CircleShape)
                         .background(MaterialTheme.colorScheme.primary)
-                        .clickable {
-                            photoPicker.launch(
-                                PickVisualMediaRequest(
-                                    ActivityResultContracts.PickVisualMedia.ImageOnly
-                                )
-                            )
-                        },
+                        .clickable(enabled = !state.isLoading) { launchPicker() },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
@@ -196,14 +219,12 @@ fun EditProfileScreen(
                 text = "Change Photo",
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable {
-                    photoPicker.launch(
-                        PickVisualMediaRequest(
-                            ActivityResultContracts.PickVisualMedia.ImageOnly
-                        )
-                    )
-                }
+                color = if (state.isLoading) {
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                } else {
+                    MaterialTheme.colorScheme.primary
+                },
+                modifier = Modifier.clickable(enabled = !state.isLoading) { launchPicker() }
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -222,6 +243,7 @@ fun EditProfileScreen(
                     isRequired = true,
                     isError = state.fullNameError != null,
                     errorMessage = state.fullNameError,
+                    enabled = !state.isLoading,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
                 )
 
@@ -242,6 +264,17 @@ fun EditProfileScreen(
                     hint = "Phone",
                     enabled = false
                 )
+
+
+                val errorMessage = state.errorMessage
+                if (errorMessage != null) {
+                    Text(
+                        text = errorMessage,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))

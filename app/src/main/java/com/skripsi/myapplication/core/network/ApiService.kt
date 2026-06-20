@@ -15,11 +15,16 @@ import com.skripsi.myapplication.model.HistoryItem
 import com.skripsi.myapplication.model.ConnectRequest
 import com.skripsi.myapplication.model.ResetPasswordRequest
 import com.skripsi.myapplication.model.SessionData
+import com.skripsi.myapplication.model.UpdateProfileResponse
 import com.skripsi.myapplication.model.VerifyForgotResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
@@ -43,6 +48,13 @@ interface ApiService {
 
     @GET("user/profile")
     suspend fun getProfileData(): Response<ApiResponse<ProfileData>>
+
+    @Multipart
+    @POST("user/profile")
+    suspend fun updateProfile(
+        @Part("full_name") fullName: RequestBody,
+        @Part avatar: MultipartBody.Part?
+    ): Response<ApiResponse<UpdateProfileResponse>>
 
     @GET("history/point-earned")
     suspend fun getPointEarned(): Response<ApiResponse<PointEarnedResponse>>
