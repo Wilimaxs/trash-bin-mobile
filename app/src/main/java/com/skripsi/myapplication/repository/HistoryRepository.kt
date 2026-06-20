@@ -22,8 +22,8 @@ class HistoryRepository @Inject constructor(
     ): NetworkResult<PaginatedResponse<HistoryItem>> {
         // Map UI category to API parameter
         val typeParam = when (category) {
-            "Organik" -> "organic"
-            "Anorganik" -> "inorganic"
+            "Organik" -> "Organik"
+            "Anorganik" -> "Anorganik"
             "B3" -> "b3"
             else -> null // "All" or unknown
         }
