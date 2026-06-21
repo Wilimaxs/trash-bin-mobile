@@ -18,7 +18,7 @@ fun OnboardingHeader(
             .fillMaxWidth()
     ) {
         Text(
-            text = "EcoBin",
+            text = "BinPoin",
             style = MaterialTheme.typography.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground
